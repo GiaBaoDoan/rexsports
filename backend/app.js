@@ -47,9 +47,6 @@ app.get("/api/ping", (req, res) => {
   res.status(200).json({ message: "Server is running!" });
 });
 
-// Error handling (Để ở cuối cùng)
-app.use(errorHandler);
-
 // Start server
 const startServer = async () => {
   try {
@@ -62,5 +59,7 @@ const startServer = async () => {
     process.exit(1); // Thoát nếu có lỗi
   }
 };
+
+app.use(errorHandler);
 
 startServer();
