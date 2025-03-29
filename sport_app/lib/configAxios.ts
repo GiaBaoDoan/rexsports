@@ -2,8 +2,8 @@ import { ApiError } from "@/types/types";
 import axios, { AxiosError } from "axios";
 
 const AxiosIntance = axios.create({
-  baseURL: "http://localhost:5000/api",
-  timeout: 20000, // break when 10s is over
+  baseURL: "https://rexsports.onrender.com/api",
+  timeout: 20000, // break when 20s is over
   headers: { "Content-Type": "application/json" },
 });
 
