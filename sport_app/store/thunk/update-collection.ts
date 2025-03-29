@@ -1,4 +1,4 @@
-import { CollectionSeverices } from "@/services/collections";
+import { CollectionSeverices } from "@/services/client-side/collections";
 import { CollectionReqType } from "@/types/collection";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

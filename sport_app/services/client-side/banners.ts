@@ -16,5 +16,5 @@ export const bannerServices = {
     AxiosInstance.put<ApiResponse<BannerRes>>(`/banners/${id}`, data),
 
   deleteBanner: (id: string) =>
-    AxiosInstance.delete<ApiResponse<ApiResponse<BannerRes>>>(`/banners/${id}`),
+    AxiosInstance.delete<ApiResponse<BannerRes>>(`/banners/${id}`),
 };

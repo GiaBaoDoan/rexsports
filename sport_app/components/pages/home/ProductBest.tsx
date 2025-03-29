@@ -3,20 +3,11 @@
 import ProductCard from "@/components/pages/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/lib/contanst";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { fetchProductsThunk } from "@/store/thunk/fetch-products";
+import { ProductRes } from "@/types/product";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const HomeBestSeller = () => {
-  const dispatch = useAppDispatch();
-  const { products } = useAppSelector((state) => state.ProductsReducer);
-
+const ProductBest = ({ products }: { products: ProductRes[] }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    dispatch(fetchProductsThunk(""));
-  }, [dispatch]);
 
   return (
     <div className="mx-auto max-w-6xl w-[90%] my-14">
@@ -50,4 +41,4 @@ const HomeBestSeller = () => {
   );
 };
 
-export default HomeBestSeller;
+export default ProductBest;

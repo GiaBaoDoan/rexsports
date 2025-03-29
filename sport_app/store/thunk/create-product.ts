@@ -1,5 +1,5 @@
 import { ProductType } from "@/schema/product";
-import { ProductServices } from "@/services/products";
+import { ProductServices } from "@/services/client-side/products";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createProductThunk = createAsyncThunk(

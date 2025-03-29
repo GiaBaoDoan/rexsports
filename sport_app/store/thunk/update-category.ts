@@ -1,5 +1,5 @@
 import { CategorySchemaType } from "@/schema/category";
-import { CategoriesService } from "@/services/categories";
+import { CategoriesService } from "@/services/client-side/categories";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 interface DataType {

@@ -1,4 +1,4 @@
-import { bannerServices } from "@/services/banners";
+import { bannerServices } from "@/services/client-side/banners";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBannerById = createAsyncThunk(

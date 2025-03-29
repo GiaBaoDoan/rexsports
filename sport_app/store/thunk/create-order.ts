@@ -1,4 +1,4 @@
-import { OrderServices } from "@/services/orders";
+import { OrderServices } from "@/services/client-side/orders";
 import { Cart } from "@/store/slice/cart";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

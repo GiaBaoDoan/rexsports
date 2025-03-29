@@ -37,4 +37,6 @@ export const BANK = {
   _branch: "Thành phố Biên Hòa, Đồng Nai",
 };
 
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export const noneEmptyMessage = "Không để trống thông tin";

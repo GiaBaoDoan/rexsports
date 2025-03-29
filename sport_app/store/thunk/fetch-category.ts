@@ -1,4 +1,4 @@
-import { CategoriesService } from "@/services/categories";
+import { CategoriesService } from "@/services/client-side/categories";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchCategory = createAsyncThunk(

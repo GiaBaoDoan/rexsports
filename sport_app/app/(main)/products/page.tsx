@@ -3,7 +3,7 @@ import ProductList from "@/components/pages/products/ProductsList";
 import Loading from "@/components/ui/loading";
 import { Suspense } from "react";
 
-const Products = () => {
+export default async function Products() {
   return (
     <div className="max-w-6xl mx-auto my-16 px-4 md:px-6">
       <article className="mb-8">
@@ -20,6 +20,4 @@ const Products = () => {
       </Suspense>
     </div>
   );
-};
-
-export default Products;
+}

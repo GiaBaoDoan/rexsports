@@ -1,4 +1,4 @@
-import { ProductServices } from "@/services/products";
+import { ProductServices } from "@/services/client-side/products";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchProduct = createAsyncThunk(

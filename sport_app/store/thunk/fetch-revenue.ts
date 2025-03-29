@@ -1,4 +1,4 @@
-import { AdminSeverice } from "@/services/dashboard";
+import { AdminSeverice } from "@/services/client-side/dashboard";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchRevenue = createAsyncThunk(
