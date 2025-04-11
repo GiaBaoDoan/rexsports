@@ -57,22 +57,21 @@ export function SignupForm() {
     },
   });
 
-  const { execute } = useAsyncAction();
+  const { execute, isLoading } = useAsyncAction();
 
   const onSubmit = (data: formType) => {
-    const { confirmPassword, ...newData } = data;
-
+    const { email, name, password } = data;
     execute({
-      actionCreator: () => SignupThunk(newData),
+      actionCreator: () => SignupThunk({ email, name, password }),
     });
   };
 
   return (
-    <Card className="w-[400px] mx-auto mt-10 p-6 shadow-lg rounded-xl">
+    <Card className="w-[400px] mx-auto mt-10 p-4 shadow-lg rounded-xl">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-medium">🔐 Tạo tài khoản</CardTitle>
+        <CardTitle className="text-3xl font-medium">🔐 Tạo tài khoản</CardTitle>
         <p className="text-gray-600 text-xs font-light">
-          Chào mừng bạn đến với{" "}
+          Chào mừng bạn đến với
           <span className="text-red-600 font-bold italic">Rexsports</span>
         </p>
       </CardHeader>
@@ -86,7 +85,7 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="abc@gmail.com" {...field} />
+                    <Input placeholder="Email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -131,7 +130,7 @@ export function SignupForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button disabled={isLoading} type="submit" className="w-full">
               Đăng ký
             </Button>
           </form>

@@ -1,9 +1,7 @@
 import { fetchData } from "@/lib/fetchDataServer";
 import { cn } from "@/lib/utils";
-
 import { CollectionResType } from "@/types/collection";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 const getAllCollections = async () => {
   return await fetchData<CollectionResType[]>("collections");

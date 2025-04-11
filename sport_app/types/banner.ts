@@ -1,10 +1,9 @@
+import { ImageType } from "@/types/product";
+
 export type BannerRes = {
   _id: string;
   title: string;
-  image: {
-    url: string;
-    publicId: string;
-  };
+  image: ImageType;
   link?: string;
   status: boolean;
   description: string;

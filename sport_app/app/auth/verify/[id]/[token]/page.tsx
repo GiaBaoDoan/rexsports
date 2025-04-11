@@ -25,7 +25,7 @@ const VerifyEmailPage = () => {
         ).unwrap();
         setStatus("success");
         setMessage(res.message || "Xác thực Email thành công!");
-      } catch (error: any) {
+      } catch (error) {
         const newError = error as AxiosError<ApiError>;
         setStatus("error");
         setMessage(

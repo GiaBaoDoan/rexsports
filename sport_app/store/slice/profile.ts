@@ -29,7 +29,6 @@ const ProfileSlice = createSlice({
       })
       .addCase(getProfileThunk.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(getProfileThunk.rejected, (state, action) => {
         state.isLoading = false;

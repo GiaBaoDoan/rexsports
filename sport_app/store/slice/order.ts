@@ -22,14 +22,14 @@ const orderDetailSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchOrder.fulfilled, (state, action) => {
-      state.order = action.payload?.data as OrderResType;
+      state.order = action.payload.data;
       state.isLoading = false;
+      state.error = null;
     });
     builder.addCase(fetchOrder.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchOrder.rejected, (state, action) => {
-      state.order = null;
       state.isLoading = false;
       state.error = action.payload as AxiosError<ApiError>;
     });

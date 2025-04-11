@@ -8,10 +8,9 @@ import { AxiosError } from "axios";
 type initialState = {
   products: ProductRes[];
   original: ProductRes[];
+  pagination: PaginationRes | null;
   isLoading: boolean;
   error: AxiosError<ApiError> | null;
-  isFetched: boolean;
-  pagination: PaginationRes;
 };
 
 const initialState: initialState = {
@@ -19,13 +18,7 @@ const initialState: initialState = {
   original: [],
   isLoading: false,
   error: null,
-  isFetched: false,
-  pagination: {
-    currentPage: 1,
-    totalPages: 1,
-    totalRecords: 0,
-    limit: 5,
-  },
+  pagination: null,
 };
 
 const productsSlice = createSlice({
@@ -43,12 +36,10 @@ const productsSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(fetchProductsThunk.fulfilled, (state, action) => {
-      const { data, pagination } = action.payload;
-      state.products = state.original = data as ProductRes[];
-      state.pagination = pagination as PaginationRes;
+      state.products = state.original = action.payload.data;
+      state.pagination = action.payload.pagination as PaginationRes;
       state.isLoading = false;
       state.error = null;
-      state.isFetched = true;
     });
     builder.addCase(fetchProductsThunk.pending, (state, _) => {
       state.isLoading = true;
@@ -57,7 +48,6 @@ const productsSlice = createSlice({
       state.products = state.original = [];
       state.error = action.payload as AxiosError<ApiError>;
       state.isLoading = false;
-      state.isFetched = false;
     });
   },
 });

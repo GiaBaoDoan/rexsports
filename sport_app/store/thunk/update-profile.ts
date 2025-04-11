@@ -1,5 +1,5 @@
 import { ProfileReqType } from "@/schema/profile";
-import { AuthServices } from "@/services/client-side/auth";
+import { AuthServices } from "@/services/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const UpdateProfileThunk = createAsyncThunk(

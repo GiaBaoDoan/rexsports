@@ -1,4 +1,4 @@
-import { AdminSeverice } from "@/services/client-side/dashboard";
+import { AdminSeverice } from "@/services/dashboard";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchRevenue = createAsyncThunk(
@@ -7,7 +7,7 @@ export const fetchRevenue = createAsyncThunk(
     try {
       const res = await AdminSeverice.fetchRevenue();
       return res.data;
-    } catch (err: any) {
+    } catch (err) {
       return rejectWithValue(err);
     }
   }

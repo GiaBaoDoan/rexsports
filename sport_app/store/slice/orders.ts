@@ -6,25 +6,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 type initialState = {
-  orders: OrderResType[] | [];
-  original: OrderResType[] | [];
+  orders: OrderResType[];
+  original: OrderResType[];
   isLoading: boolean;
   error: AxiosError<ApiError> | null;
-  pagination: PaginationRes;
-  isFetched: boolean;
+  pagination: PaginationRes | null;
 };
 
 const initialState: initialState = {
   orders: [],
   original: [],
   isLoading: false,
-  isFetched: false,
-  pagination: {
-    currentPage: 1,
-    limit: 5,
-    totalPages: 0,
-    totalRecords: 0,
-  },
+  pagination: null,
   error: null,
 };
 
@@ -33,7 +26,7 @@ const OrderSlice = createSlice({
   initialState,
   reducers: {
     filterByPhoneNumber: (state, action: PayloadAction<string>) => {
-      const key = action.payload as string;
+      const key = action.payload;
       state.orders = state.original.filter((order) =>
         removeVietnameseTones(order.phone).includes(removeVietnameseTones(key))
       );
@@ -41,21 +34,16 @@ const OrderSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
-      const { data, pagination } = action.payload;
-      state.orders = state.original = data as OrderResType[];
-      state.pagination = pagination as PaginationRes;
+      state.orders = state.original = action.payload.data;
+      state.pagination = action.payload.pagination as PaginationRes;
       state.isLoading = false;
-      state.error = null;
-      state.isFetched = true;
     });
     builder.addCase(fetchOrders.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchOrders.rejected, (state, action) => {
-      state.orders = [];
       state.isLoading = false;
       state.error = action.payload as AxiosError<ApiError>;
-      state.isFetched = false;
     });
   },
 });

@@ -20,7 +20,9 @@ const CreateCollectionPage = () => {
 
   return (
     <div>
-      <h1 className="mb-5">Thêm bộ sưu tập</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-5">
+        📝 Thêm bộ sưu tập
+      </h1>
       <CollectionForm isSubmiting={isLoading} onSubmit={handleCreate} />
     </div>
   );

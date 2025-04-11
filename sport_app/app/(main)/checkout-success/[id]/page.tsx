@@ -14,6 +14,7 @@ const Page = () => {
   useEffect(() => {
     dispatch(fetchOrder(`${id}`));
   }, [id, dispatch]);
+
   return (
     <div className="w-[80%] container mx-auto py-10">
       <article className="mb-5">

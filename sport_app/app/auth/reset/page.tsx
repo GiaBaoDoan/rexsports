@@ -1,7 +1,7 @@
 import ResetWithEmailForm from "@/components/forms/ResetWithEmailForm";
 
-const page = () => {
+const RequestResetPasswordPage = () => {
   return <ResetWithEmailForm />;
 };
 
-export default page;
+export default RequestResetPasswordPage;

@@ -7,6 +7,7 @@ import { PATH } from "@/lib/contanst";
 import { useAppDispatch } from "@/store/store";
 import { getAllCollections } from "@/store/thunk/fetch-collections";
 import { useEffect } from "react";
+import CollectionFilter from "@/components/filters/CollectionFilter";
 
 const CollectionPage = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,10 @@ const CollectionPage = () => {
           <Button className="px-4 py-2">+ Thêm bộ sưu tập</Button>
         </Link>
       </header>
-      <CollectionTable />
+      <div className="space-y-7">
+        <CollectionFilter />
+        <CollectionTable />
+      </div>
     </section>
   );
 };

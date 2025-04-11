@@ -17,9 +17,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import useFetchData from "@/hooks/use-fetch-data";
-import { useAppSelector } from "@/store/store";
+import { menus } from "@/lib/contanst";
 import { getProfileThunk } from "@/store/thunk/get-profile";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
@@ -27,6 +27,19 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   useFetchData(() => getProfileThunk(), []);
+
+  const pathname = usePathname();
+
+  const getBreadcrumbLabelByPath = (pathname: string) => {
+    for (const menu of menus) {
+      for (const item of menu.urls) {
+        if (pathname.startsWith(item.url)) {
+          return item.text;
+        }
+      }
+    }
+    return null;
+  };
 
   return (
     <SidebarProvider>
@@ -42,23 +55,15 @@ export default function DashboardLayout({
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Danh sách sản phẩm</BreadcrumbPage>
+                <BreadcrumbPage>
+                  {getBreadcrumbLabelByPath(pathname)}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
           <Profile />
         </header>
-        <div className="p-10">
-          {/* {isAdmin && !isLoading ? (
-            children
-          ) : (
-            <div className="text-center text-red-500">
-              🚫 Bạn không có quyền truy cập vào trang này!
-            </div>
-          )} */}
-
-          {children}
-        </div>
+        <div className="p-10">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

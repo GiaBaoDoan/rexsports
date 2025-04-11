@@ -9,4 +9,6 @@ export const UserServices = {
     AxiosInstance.get<ApiResponse<UserResType>>(`/users/${id}`),
   updateUser: (id: string, data: UserReqType) =>
     AxiosInstance.put<ApiResponse<UserResType>>(`/users/${id}`, data),
+  deleteUser: (id: string) =>
+    AxiosInstance.delete<ApiResponse<UserResType>>(`/users/${id}`),
 };

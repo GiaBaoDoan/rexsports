@@ -35,6 +35,60 @@ export const PATH = {
   },
 };
 
+export const menus = [
+  {
+    title: "Dashboard",
+    urls: [
+      { url: PATH.dashboard.overview, text: "Tổng quan" },
+      { url: PATH.dashboard.report, text: "Báo cáo" },
+    ],
+  },
+
+  {
+    title: "Người dùng",
+    urls: [{ url: PATH.user.list, text: "Quản lý người dùng" }],
+  },
+  {
+    title: "Đơn hàng",
+    urls: [{ url: PATH.orders.list, text: "Quản lý đơn hàng" }],
+  },
+  {
+    title: "Sản phẩm",
+    urls: [
+      { url: PATH.products.admin, text: "Quản lý sản phẩm" },
+      { url: PATH.products.add, text: "Thêm sản phẩm" },
+    ],
+  },
+  {
+    title: "Danh mục",
+    urls: [
+      { url: PATH.categories.list, text: "Quản lý danh mục" },
+      { url: PATH.categories.add, text: "Thêm danh mục" },
+    ],
+  },
+
+  {
+    title: "Banner ảnh",
+    urls: [
+      {
+        url: PATH.banner.list,
+        text: "Quản lý banners",
+      },
+      {
+        url: PATH.banner.add,
+        text: "Thêm banner ảnh",
+      },
+    ],
+  },
+  {
+    title: "Bộ sưu tập",
+    urls: [
+      { url: PATH.collection.list, text: "Quản lý bộ sưu tập" },
+      { url: PATH.collection.add, text: "Thêm bộ sưu tập" },
+    ],
+  },
+];
+
 export const BANK = {
   _userName: "DOAN GIA BAO",
   _bankName: "vietinbank",

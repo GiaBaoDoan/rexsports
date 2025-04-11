@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { addToCart, Cart } from "@/store/slice/cart";
-import { useAppSelector } from "@/store/store";
 import { ProductRes, VariantType } from "@/types/product";
 import { useState } from "react";
 import { useDispatch } from "react-redux";

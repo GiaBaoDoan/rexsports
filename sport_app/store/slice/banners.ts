@@ -1,7 +1,8 @@
+import { removeVietnameseTones } from "@/lib/string";
 import { fetchBanners } from "@/store/thunk/fetch-banners";
 import { BannerRes } from "@/types/banner";
 import { ApiError } from "@/types/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 type initialState = {
@@ -19,22 +20,21 @@ const initialState: initialState = {
 };
 
 const BannerSlice = createSlice({
-  name: "BannersSlice",
+  name: "banners",
   initialState,
   reducers: {
-    // filterByName: (state, action) => {
-    //   const key = action.payload.toLowerCase();
-    //   state.banners = state.original.filter((cat) =>
-    //     removeVietnameseTones(cat.name)
-    //       .toLowerCase()
-    //       .includes(removeVietnameseTones(key))
-    //   );
-    // },
+    filterByTitle: (state, action: PayloadAction<string>) => {
+      const key = action.payload.toLowerCase();
+      state.banners = state.original.filter((banner) =>
+        removeVietnameseTones(banner.title)
+          .toLowerCase()
+          .includes(removeVietnameseTones(key))
+      );
+    },
   },
   extraReducers(builder) {
-    builder.addCase(fetchBanners.fulfilled, (state, { payload }) => {
-      const { data } = payload;
-      state.original = state.banners = data as BannerRes[];
+    builder.addCase(fetchBanners.fulfilled, (state, action) => {
+      state.original = state.banners = action.payload.data;
       state.isLoading = false;
       state.error = null;
     });
@@ -43,12 +43,11 @@ const BannerSlice = createSlice({
     });
     builder.addCase(fetchBanners.rejected, (state, action) => {
       state.isLoading = false;
-      state.banners = state.original = [];
       state.error = action.payload as AxiosError<ApiError>;
     });
   },
 });
 
-// export const { filterByName } = BannerSlice.actions;
+export const { filterByTitle } = BannerSlice.actions;
 
 export default BannerSlice.reducer;

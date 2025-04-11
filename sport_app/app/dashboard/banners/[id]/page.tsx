@@ -9,7 +9,7 @@ import { updateBanner } from "@/store/thunk/update-banner";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
-const BannerUpdate = () => {
+const BannerUpdatePage = () => {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
@@ -50,4 +50,4 @@ const BannerUpdate = () => {
   );
 };
 
-export default BannerUpdate;
+export default BannerUpdatePage;

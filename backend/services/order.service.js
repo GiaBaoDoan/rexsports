@@ -68,7 +68,7 @@ const deleteOrder = async (id) => {
 };
 
 const updateOrder = async (id, data) => {
-  await getOrderById(id);
+  // await getOrderById(id);
 
   const updatedOrder = await Order.findByIdAndUpdate(id, data, { new: true });
 

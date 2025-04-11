@@ -1,4 +1,4 @@
-import { DataType, OrderServices } from "@/services/client-side/orders";
+import { DataType, OrderServices } from "@/services/orders";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const updateOrderStatus = createAsyncThunk(

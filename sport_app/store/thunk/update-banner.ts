@@ -1,5 +1,5 @@
 import { BannerRequestForm } from "@/schema/banner";
-import { bannerServices } from "@/services/client-side/banners";
+import { bannerServices } from "@/services/banners";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 interface DataType {

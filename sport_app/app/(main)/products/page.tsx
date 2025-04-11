@@ -1,7 +1,6 @@
-import { ProductFilter } from "@/components/filters";
+import ProductFilter from "@/components/filters/ProductFilter";
 import ProductList from "@/components/pages/products/ProductsList";
 import Loading from "@/components/ui/loading";
-import { API_URL } from "@/lib/contanst";
 import { fetchData } from "@/lib/fetchDataServer";
 import { ProductRes } from "@/types/product";
 import { Suspense } from "react";

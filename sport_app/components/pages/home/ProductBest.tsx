@@ -1,17 +1,13 @@
 import ProductCard from "@/components/pages/products/ProductCard";
 import { Button } from "@/components/ui/button";
-import { PATH } from "@/lib/contanst";
 import { fetchData } from "@/lib/fetchDataServer";
 import { ProductRes } from "@/types/product";
-import { useRouter } from "next/router";
 
 const getProductsBestSeller = async () => {
   return await fetchData<ProductRes[]>("/products");
 };
 
 const ProductBest = async () => {
-  // const router = useRouter();
-
   const products = await getProductsBestSeller();
 
   return (

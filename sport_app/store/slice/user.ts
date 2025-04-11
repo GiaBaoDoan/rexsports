@@ -29,7 +29,6 @@ const UserSlice = createSlice({
       })
       .addCase(getUserById.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(getUserById.rejected, (state, action) => {
         state.isLoading = false;

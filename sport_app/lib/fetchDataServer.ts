@@ -2,7 +2,7 @@ import { API_URL } from "@/lib/contanst";
 
 export const fetchData = async <T>(
   endpoint: string,
-  queryObj?: Record<string, any>,
+  queryObj?: Record<string, string>,
   options?: RequestInit
 ): Promise<T | null> => {
   try {

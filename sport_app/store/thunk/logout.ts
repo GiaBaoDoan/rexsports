@@ -1,4 +1,4 @@
-import { AuthServices } from "@/services/client-side/auth";
+import { AuthServices } from "@/services/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const LogoutThunk = createAsyncThunk(

@@ -1,5 +1,6 @@
 "use client";
 
+import BannerFilter from "@/components/filters/BannerFilter";
 import BannerTable from "@/components/tables/BannerTable";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/lib/contanst";
@@ -8,7 +9,7 @@ import { fetchBanners } from "@/store/thunk/fetch-banners";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function BannerPage() {
+export default function BannersPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function BannerPage() {
           <Button className="px-4 py-2">+ Thêm banner</Button>
         </Link>
       </header>
+      <BannerFilter />
       <BannerTable />
     </section>
   );

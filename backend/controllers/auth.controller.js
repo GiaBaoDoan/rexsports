@@ -22,6 +22,7 @@ const login = async (req, res, next) => {
   try {
     const { user, token } = await AuthServices.login(req.body);
     res.cookie("access_token", token, cookieOptions);
+
     return res.status(httpStatus.CREATED).json({
       data: user,
       status: httpStatus.CREATED,
@@ -51,7 +52,7 @@ const updateProfile = async (req, res, next) => {
     return res.status(httpStatus.OK).json({
       data: updatedMe,
       status: httpStatus.OK,
-      message: MESSAGE.COMMON.OK,
+      message: "Cập nhật thông tin thành công !!",
     });
   } catch (err) {
     next(err);
@@ -61,8 +62,14 @@ const updateProfile = async (req, res, next) => {
 const updatePassword = async (req, res, next) => {
   try {
     const newUser = await AuthServices.updatePassword(req.user.id, req.body);
-    return successResponse(res, newUser, "Đã thay đổi password");
+
+    return res.status(httpStatus.OK).json({
+      data: newUser,
+      status: httpStatus.OK,
+      message: "Đã cập nhật mật khẩu thành công !!",
+    });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

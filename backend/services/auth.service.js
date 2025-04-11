@@ -68,7 +68,7 @@ const updateMe = async (id, data) => {
 };
 
 const updatePassword = async (userId, data) => {
-  const user = await getMe(userId);
+  const user = await User.findById(userId);
 
   const isMatch = await comparePassword(data.currentPassword, user.password);
 
@@ -79,7 +79,8 @@ const updatePassword = async (userId, data) => {
   const hashedPassword = await hashPassword(data.newPassword);
   user.password = hashedPassword;
 
-  return await user.save();
+  await user.save();
+  return user;
 };
 
 const verifyEmail = async (userId, tokenValue) => {

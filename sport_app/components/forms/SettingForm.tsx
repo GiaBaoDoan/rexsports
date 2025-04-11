@@ -36,7 +36,7 @@ export function SettingForm() {
 
   const { profile } = useAppSelector((state) => state.ProfileReducer);
 
-  const { execute } = useAsyncAction();
+  const { execute, isLoading } = useAsyncAction();
 
   const onSubmit = (data: ProfileReqType) => {
     execute({
@@ -79,9 +79,7 @@ export function SettingForm() {
                     accept="image/*"
                     onChange={(event) => {
                       if (event.target.files) {
-                        convertToBase64(event.target.files[0]).then((image) => {
-                          onChange(image);
-                        });
+                        convertToBase64(event.target.files[0]).then(onChange);
                       }
                     }}
                   />
@@ -174,7 +172,7 @@ export function SettingForm() {
               </FormItem>
             )}
           />
-          <Button>Lưu profile</Button>
+          <Button disabled={isLoading}>Lưu profile</Button>
         </div>
       </form>
     </Form>

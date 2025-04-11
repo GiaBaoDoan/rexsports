@@ -79,7 +79,6 @@ const PaginationCustom = ({ pagination }: { pagination: PaginationRes }) => {
             </SelectTrigger>
             <SelectContent className="text-sm">
               <SelectGroup>
-                <SelectItem value="5">5</SelectItem>
                 <SelectItem value="10">10</SelectItem>
                 <SelectItem value="20">20</SelectItem>
                 <SelectItem value="30">30</SelectItem>

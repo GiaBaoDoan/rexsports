@@ -9,8 +9,7 @@ type initialState = {
   original: CategoriesRes[];
   categories: CategoriesRes[];
   isLoading: boolean;
-  isFetched: boolean;
-  pagination: PaginationRes;
+  pagination: PaginationRes | null;
   error: AxiosError<ApiError> | null;
 };
 
@@ -18,14 +17,8 @@ const initialState: initialState = {
   original: [],
   categories: [],
   isLoading: false,
-  isFetched: false,
   error: null,
-  pagination: {
-    currentPage: 1,
-    totalPages: 1,
-    totalRecords: 0,
-    limit: 5,
-  },
+  pagination: null,
 };
 
 const CategoriesSlice = createSlice({
@@ -42,13 +35,11 @@ const CategoriesSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchCategories.fulfilled, (state, { payload }) => {
-      const { data } = payload;
-      state.original = state.categories = data as CategoriesRes[];
-      state.pagination = payload.pagination as PaginationRes;
+    builder.addCase(fetchCategories.fulfilled, (state, action) => {
+      state.original = state.categories = action.payload.data;
+      state.pagination = action.payload.pagination as PaginationRes;
       state.isLoading = false;
       state.error = null;
-      state.isFetched = true;
     });
     builder.addCase(fetchCategories.pending, (state) => {
       state.isLoading = true;
@@ -57,7 +48,6 @@ const CategoriesSlice = createSlice({
       state.isLoading = false;
       state.categories = state.original = [];
       state.error = action.payload as AxiosError<ApiError>;
-      state.isFetched = false;
     });
   },
 });

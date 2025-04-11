@@ -11,7 +11,7 @@ export default async function Product({
 }: {
   params: { slug: string };
 }) {
-  const product = (await getProductDetail(params?.slug)) as ProductRes;
+  const product = (await getProductDetail(params.slug)) as ProductRes;
 
   return <DetailProduct product={product} />;
 }

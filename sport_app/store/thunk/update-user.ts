@@ -1,5 +1,5 @@
 import { UserReqType } from "@/components/forms/UserForm";
-import { UserServices } from "@/services/client-side/user";
+import { UserServices } from "@/services/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 interface DataType {

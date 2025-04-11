@@ -1,17 +1,20 @@
+import { removeVietnameseTones } from "@/lib/string";
 import { getAllCollections } from "@/store/thunk/fetch-collections";
 import { CollectionResType } from "@/types/collection";
 import { ApiError } from "@/types/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 type initialState = {
-  collections: CollectionResType[] | null;
+  collections: CollectionResType[];
+  original: CollectionResType[];
   isLoading: boolean;
-  error?: AxiosError<ApiError> | null;
+  error: AxiosError<ApiError> | null;
 };
 
 const initialState: initialState = {
   collections: [],
+  original: [],
   isLoading: false,
   error: null,
 };
@@ -19,10 +22,19 @@ const initialState: initialState = {
 const collectionsSlice = createSlice({
   name: "collections",
   initialState,
-  reducers: {},
+  reducers: {
+    filterByName: (state, action) => {
+      const key = action.payload.toLowerCase();
+      state.collections = state.original.filter((coll) =>
+        removeVietnameseTones(coll.name)
+          .toLowerCase()
+          .includes(removeVietnameseTones(key))
+      );
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getAllCollections.fulfilled, (state, action) => {
-      state.collections = action.payload.data as CollectionResType[];
+      state.collections = state.original = action.payload.data;
       state.isLoading = false;
       state.error = null;
     });
@@ -30,7 +42,6 @@ const collectionsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllCollections.rejected, (state, action) => {
-      state.collections = [];
       state.isLoading = false;
       state.error = action.payload as AxiosError<ApiError>;
     });

@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 type initialState = {
   collection: CollectionResType | null;
   isLoading: boolean;
-  error?: AxiosError<ApiError> | null;
+  error: AxiosError<ApiError> | null;
 };
 
 const initialState: initialState = {
@@ -22,7 +22,7 @@ const collectionSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchCollectionById.fulfilled, (state, action) => {
-      state.collection = action.payload.data as CollectionResType;
+      state.collection = action.payload.data;
       state.isLoading = false;
       state.error = null;
     });

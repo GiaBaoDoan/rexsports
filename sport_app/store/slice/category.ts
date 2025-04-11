@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 type initialState = {
   category: CategoriesRes | null;
   isLoading: boolean;
-  error?: AxiosError<ApiError> | null;
+  error: AxiosError<ApiError> | null;
 };
 
 const initialState: initialState = {
@@ -17,12 +17,12 @@ const initialState: initialState = {
 };
 
 const CategorySlice = createSlice({
-  name: "Category",
+  name: "category",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchCategory.fulfilled, (state, action) => {
-      state.category = action.payload.data as CategoriesRes;
+      state.category = action.payload.data;
       state.isLoading = false;
       state.error = null;
     });

@@ -1,4 +1,3 @@
-import HeaderDropDownMenu from "@/components/layout/HeaderDropDownMenu";
 import HeaderCart from "@/components/layout/HeaderCart";
 import Link from "next/link";
 

@@ -1,18 +1,28 @@
 "use client";
 
+import PaginationCustom from "@/components/common/Pagination";
+import UserFilter from "@/components/filters/UserFilter";
 import UserTable from "@/components/tables/UserTable";
-import { Button } from "@/components/ui/button";
-import { PATH } from "@/lib/contanst";
-import { useAppDispatch } from "@/store/store";
+import Loading from "@/components/ui/loading";
+import useFetchData from "@/hooks/use-fetch-data";
+import { useAppSelector } from "@/store/store";
 import { getAllUsersThunk } from "@/store/thunk/get-users";
-import Link from "next/link";
-import { useEffect } from "react";
+import { PaginationRes } from "@/types/types";
+import { Suspense } from "react";
 
 const UsersPage = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getAllUsersThunk());
-  }, [dispatch]);
+  return (
+    <Suspense fallback={<Loading />}>
+      <UsersPageContent />
+    </Suspense>
+  );
+};
+
+const UsersPageContent = () => {
+  const { pagination } = useAppSelector((state) => state.UsersReducer);
+
+  useFetchData(() => getAllUsersThunk(), []);
+
   return (
     <section>
       <header className="flex flex-wrap justify-between items-center gap-3 mb-7">
@@ -22,11 +32,12 @@ const UsersPage = () => {
         >
           📂 Quản lý người dùng
         </h1>
-        <Link href={PATH.products.add}>
-          <Button className="px-4 py-2 font-medium">+ Người dùng</Button>
-        </Link>
       </header>
-      <UserTable />
+      <div className="space-y-5">
+        <UserFilter />
+        <UserTable />
+        <PaginationCustom pagination={pagination as PaginationRes} />
+      </div>
     </section>
   );
 };

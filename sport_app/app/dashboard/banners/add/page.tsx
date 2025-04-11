@@ -5,7 +5,7 @@ import useAsyncAction from "@/hooks/useAsyncAction";
 import { BannerRequestForm } from "@/schema/banner";
 import { createBanner } from "@/store/thunk/create-banner";
 
-const BannerAdd = () => {
+const BannerAddPage = () => {
   const { execute, isLoading } = useAsyncAction();
   const handleCreate = (data: BannerRequestForm) => {
     execute({
@@ -23,4 +23,4 @@ const BannerAdd = () => {
   );
 };
 
-export default BannerAdd;
+export default BannerAddPage;

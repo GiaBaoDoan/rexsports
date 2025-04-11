@@ -19,13 +19,10 @@ import { getDate } from "@/lib/date";
 import { Tooltip } from "@/components/ui/tooltip";
 import EditOrDelete from "@/components/ui/edit-delete";
 import NoData from "@/components/ui/no-data";
-import Loading from "@/components/ui/loading";
 import Status from "@/components/ui/product-status";
 
 const ProductsTable = () => {
-  const { products, isLoading, isFetched } = useAppSelector(
-    (state) => state.ProductsReducer
-  );
+  const { products } = useAppSelector((state) => state.ProductsReducer);
 
   const { execute, isLoading: isSubmiting } = useAsyncAction();
   const dispatch = useAppDispatch();
@@ -33,13 +30,10 @@ const ProductsTable = () => {
   const handleDelete = (id: string) => {
     execute({
       actionCreator: () => deleteProductThunk(id),
-      callBack: () => {
-        dispatch(fetchProductsThunk(""));
-      },
+      callBack: () => dispatch(fetchProductsThunk("")),
     });
   };
 
-  if (isLoading && !isFetched) return <Loading />;
   return (
     <div className="mt-5 border rounded-lg p-2">
       <Table>

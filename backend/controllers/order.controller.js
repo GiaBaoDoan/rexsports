@@ -55,8 +55,10 @@ const getOrderById = async (req, res, next) => {
 
 const UpdateOrder = async (req, res, next) => {
   try {
-    const { orderId } = req.params;
-    const updatedOrder = await OrderServices.updateOrder(orderId, req.body);
+    const updatedOrder = await OrderServices.updateOrder(
+      req.params.id,
+      req.body
+    );
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,

@@ -1,11 +1,11 @@
-import { bannerServices } from "@/services/banners";
+import { UserServices } from "@/services/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchBannerById = createAsyncThunk(
-  "/fetch-banner",
+export const deleteUserThunk = createAsyncThunk(
+  "/delete-user",
   async (id: string, { rejectWithValue }) => {
     try {
-      const res = await bannerServices.fetchBannerById(id);
+      const res = await UserServices.deleteUser(id);
       return res.data;
     } catch (err) {
       return rejectWithValue(err);

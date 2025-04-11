@@ -18,6 +18,7 @@ const OrderFilter = () => {
   const dispatch = useAppDispatch();
 
   const [phone, setPhone] = useState("");
+  const [orderCode, setOrderCode] = useState("");
   const debounced = useDebouncedValue(phone, 500);
 
   const { updateQuery } = useQueryParams();
@@ -28,20 +29,17 @@ const OrderFilter = () => {
 
   return (
     <div className="my-5 grid grid-cols-4 gap-3">
-      {/* filter by phone number */}
       <Input
         onChange={(e) => setPhone(e.target.value)}
         value={phone}
         placeholder="Lọc số điện thoại..."
       ></Input>
-      {/* filter by phone number */}
       <Input
-        onChange={(e) => setPhone(e.target.value)}
-        value={phone}
-        placeholder="Lọc số điện thoại..."
+        onChange={(e) => setOrderCode(e.target.value)}
+        value={orderCode}
+        placeholder="Lọc mã đơn hàng..."
       ></Input>
 
-      {/* filter by status */}
       <Select onValueChange={(shipping) => updateQuery("shipping", shipping)}>
         <SelectTrigger>
           <SelectValue placeholder="Tình trạng đơn" />
@@ -55,7 +53,6 @@ const OrderFilter = () => {
           <SelectItem value="Cancelled">Đã hủy bỏ</SelectItem>
         </SelectContent>
       </Select>
-      {/* filter by isPaid */}
       <Select onValueChange={(isPaid) => updateQuery("isPaid", isPaid)}>
         <SelectTrigger>
           <SelectValue placeholder="Thanh toán" />

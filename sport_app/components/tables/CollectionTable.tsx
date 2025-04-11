@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   Table,
   TableBody,
@@ -8,21 +8,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { PATH } from "@/lib/contanst";
 import EditOrDelete from "@/components/ui/edit-delete";
 import Status from "@/components/ui/product-status";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { deleteCollection } from "@/store/thunk/delete-collection";
+import NoData from "@/components/ui/no-data";
+import { getDate } from "@/lib/date";
+import { getAllCollections } from "@/store/thunk/fetch-collections";
 
 const CollectionTable = () => {
   const { collections } = useAppSelector((state) => state.CollectionsReducer);
+  const { execute, isLoading } = useAsyncAction();
 
-  const { execute } = useAsyncAction();
+  const dispatch = useAppDispatch();
 
   const handleDelete = (id: string) => {
     execute({
       actionCreator: () => deleteCollection(id),
+      callBack: () => dispatch(getAllCollections()),
     });
   };
 
@@ -33,8 +37,8 @@ const CollectionTable = () => {
           <TableRow>
             <TableHead>Hình ảnh</TableHead>
             <TableHead>Tên</TableHead>
+            <TableHead>Cập nhật</TableHead>
             <TableHead>Mô tả</TableHead>
-            <TableHead>Số sản phẩm</TableHead>
             <TableHead>Trạng thái</TableHead>
             <TableHead className="text-right">Thao tác</TableHead>
           </TableRow>
@@ -52,22 +56,19 @@ const CollectionTable = () => {
                 />
               </TableCell>
               <TableCell>{collection.name}</TableCell>
-              <TableCell
-                className="truncate max-w-[150px]"
-                title={collection.description}
-              >
+              <TableCell>{getDate(collection.updatedAt)}</TableCell>
+
+              <TableCell className="truncate max-w-[150px]">
                 {collection.description}
               </TableCell>
-              <TableCell className="text-center">
-                {collection.products.length}
-              </TableCell>
+
               <TableCell>
-                <Status status={collection.status as boolean} />
+                <Status status={collection.status} />
               </TableCell>
               <TableCell className="text-right space-x-2">
                 <EditOrDelete
                   onDelete={() => handleDelete(collection._id)}
-                  isLoading={false}
+                  isLoading={isLoading}
                   path={PATH.collection.edit(collection._id)}
                 />
               </TableCell>
@@ -75,6 +76,7 @@ const CollectionTable = () => {
           ))}
         </TableBody>
       </Table>
+      {!collections?.length && <NoData />}
     </div>
   );
 };

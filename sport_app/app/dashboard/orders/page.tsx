@@ -1,7 +1,7 @@
 "use client";
 
 import PaginationCustom from "@/components/common/Pagination";
-import { OrderFilter } from "@/components/filters";
+import OrderFilter from "@/components/filters/OrderFilter";
 import OrderTable from "@/components/tables/OrderTable";
 import Loading from "@/components/ui/loading";
 import { useAppDispatch, useAppSelector } from "@/store/store";

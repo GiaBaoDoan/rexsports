@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/lib/contanst";
 import Link from "next/link";
-
 import PaginationCustom from "@/components/common/Pagination";
 import ProductFilter from "@/components/filters/ProductFilter";
 import ProductsTable from "@/components/tables/ProductTable";
@@ -13,20 +12,20 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "@/components/ui/loading";
 import useFetchData from "@/hooks/use-fetch-data";
+import { PaginationRes } from "@/types/types";
 
-const ProductPage = () => {
+const ProductsPage = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <ProductPageContent />
+      <ProductsPageContent />
     </Suspense>
   );
 };
 
-const ProductPageContent = () => {
+const ProductsPageContent = () => {
   const { pagination } = useAppSelector((state) => state.ProductsReducer);
 
   const queries = useSearchParams();
-
   useFetchData(() => fetchProductsThunk(`${queries}`), [queries]);
 
   return (
@@ -44,9 +43,9 @@ const ProductPageContent = () => {
       </header>
       <ProductFilter />
       <ProductsTable />
-      <PaginationCustom pagination={pagination} />
+      <PaginationCustom pagination={pagination as PaginationRes} />
     </section>
   );
 };
 
-export default ProductPage;
+export default ProductsPage;

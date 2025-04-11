@@ -6,9 +6,9 @@ import axios, { AxiosError } from "axios";
 
 const AxiosIntance = axios.create({
   baseURL: API_URL,
-  timeout: 20000, // break when 20s is over
-  headers: { "Content-Type": "application/json" },
+  timeout: 30000,
   withCredentials: true,
+  headers: { "Content-Type": "application/json" },
 });
 
 AxiosIntance.interceptors.response.use(

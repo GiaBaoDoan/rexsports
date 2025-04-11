@@ -2,8 +2,6 @@ import AboutUs from "@/components/pages/home/AboutUs";
 import Banner from "@/components/pages/home/Banner";
 import Collections from "@/components/pages/home/Collection";
 import ProductBest from "@/components/pages/home/ProductBest";
-import { getAllCollectionsServer } from "@/services/server-side/collection";
-import { getAllProductsSever } from "@/services/server-side/product";
 import Image from "next/image";
 
 export default async function Home() {

@@ -15,13 +15,10 @@ import { getDate } from "@/lib/date";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { deleteCategory } from "@/store/thunk/delete-category";
 import { fetchCategories } from "@/store/thunk/fetch-categories";
-import Loading from "@/components/ui/loading";
 import NoData from "@/components/ui/no-data";
 
 const CategoryTable = () => {
-  const { categories, isLoading, isFetched } = useAppSelector(
-    (state) => state.CategoriesReducer
-  );
+  const { categories } = useAppSelector((state) => state.CategoriesReducer);
 
   const { execute, isLoading: isSubmiting } = useAsyncAction();
   const dispatch = useAppDispatch();
@@ -32,8 +29,6 @@ const CategoryTable = () => {
       callBack: () => dispatch(fetchCategories()),
     });
   };
-
-  if (isLoading && !isFetched) return <Loading />;
 
   return (
     <div className="mt-5 border rounded-lg p-2">

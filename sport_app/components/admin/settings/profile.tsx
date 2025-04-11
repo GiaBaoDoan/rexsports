@@ -25,12 +25,8 @@ export default function Profile() {
 
   const handleLogout = () => {
     execute({
-      actionCreator() {
-        return LogoutThunk();
-      },
-      callBack() {
-        router.push("/auth/login");
-      },
+      actionCreator: LogoutThunk,
+      callBack: () => router.push("/auth/login"),
     });
   };
 
@@ -42,8 +38,8 @@ export default function Profile() {
             src={`${profile?.image?.url}`}
             className="w-10 h-10 object-cover rounded-full"
             width={150}
-            alt="Avatar"
             height={80}
+            alt="Avatar"
           />
         ) : (
           <span className="flex items-center justify-center rounded-full w-10 h-10 bg-sky-500">

@@ -1,5 +1,5 @@
 import { loginType } from "@/components/forms/LoginForm";
-import { AuthServices } from "@/services/client-side/auth";
+import { AuthServices } from "@/services/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const LoginThunk = createAsyncThunk(

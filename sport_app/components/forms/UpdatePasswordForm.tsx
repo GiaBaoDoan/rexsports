@@ -79,7 +79,9 @@ const UpdatePasswordForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full">Lưu mật khẩu</Button>
+        <Button disabled={isLoading} className="w-full">
+          Lưu mật khẩu
+        </Button>
       </form>
     </Form>
   );

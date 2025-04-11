@@ -1,10 +1,25 @@
 const httpStatus = require("../constants/httpStatus");
 const User = require("../models/User.model");
 const CustomError = require("../utils/customError");
+const getPagination = require("../utils/pagination.util");
 
-const getAllUsers = async () => {
-  const users = await User.find().select("-password");
-  return users;
+const getAllUsers = async ({ page, limit }) => {
+  const totalRecords = await User.countDocuments();
+
+  const { skip, currentPage, totalPages } = getPagination(
+    totalRecords,
+    parseInt(page),
+    parseInt(limit)
+  );
+  const users = await User.find()
+    .sort({ createAt: -1 })
+    .skip(skip)
+    .limit(parseInt(limit));
+
+  return {
+    users,
+    pagination: { totalRecords, totalPages, currentPage, limit },
+  };
 };
 
 const getUserById = async (id) => {

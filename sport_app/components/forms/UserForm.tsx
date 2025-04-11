@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/select";
 import { useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
 import { Label } from "@/components/ui/label";
+import Avatar from "@/components/ui/avatar";
+import { ImageType } from "@/types/product";
 
-// Schema validation với zod
 const formSchema = z.object({
   email: z.string().email(),
   image: z.any(),
@@ -73,13 +73,7 @@ const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
           <div className="space-y-2 text-sm">
             <Label className="font-semibold text-gray-700">Email</Label>
             <p>{user.email}</p>
-            <Image
-              width={150}
-              height={80}
-              src={user?.image?.url || "/default-avatar.png"}
-              alt="Avatar"
-              className="w-24 h-24 rounded-full object-cover border"
-            />
+            {<Avatar avatar={user.image as ImageType} />}
           </div>
 
           <FormField

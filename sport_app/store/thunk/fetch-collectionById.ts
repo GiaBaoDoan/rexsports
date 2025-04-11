@@ -1,4 +1,4 @@
-import { CollectionSeverices } from "@/services/client-side/collections";
+import { CollectionSeverices } from "@/services/collections";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchCollectionById = createAsyncThunk(

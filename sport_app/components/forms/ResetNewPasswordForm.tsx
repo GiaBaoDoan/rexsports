@@ -14,7 +14,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { resetNewPassword } from "@/store/thunk/reset-newPassword";
 
