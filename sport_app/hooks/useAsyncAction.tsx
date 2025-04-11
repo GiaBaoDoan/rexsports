@@ -20,17 +20,25 @@ const useAsyncAction = () => {
     setIsLoading(true);
     try {
       const res = await dispatch(actionCreator()).unwrap();
-      toast({ description: `✅ ${res?.message}` });
-      if (callBack) {
-        callBack(res);
-      }
+      toast({
+        title: "Thành công 🎉",
+        description: res?.message || "Thao tác thành công!",
+      });
+      if (callBack) callBack(res);
     } catch (err) {
       const newErr = err as AxiosError<ApiError>;
-      if (newErr.status === 500) {
-        toast({ description: `❌ Lỗi đến từ máy chủ` });
+      let errorMessage;
+
+      if (!newErr.response) {
+        errorMessage = "Lỗi từ máy chủ. Vui lòng thử lại sau!";
       } else {
-        toast({ description: `❌ ${newErr?.response?.data.message}` });
+        errorMessage = newErr.response.data.message || "Lỗi không xác định!";
       }
+      toast({
+        title: "Lỗi ❌",
+        description: errorMessage,
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }

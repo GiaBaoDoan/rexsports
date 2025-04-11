@@ -1,4 +1,3 @@
-import { noneEmptyMessage } from "@/lib/contanst";
 import { VariantDefaultValues, VariantSchema } from "@/schema/variants";
 import { z } from "zod";
 
@@ -18,12 +17,12 @@ import { z } from "zod";
 // ),
 
 export const ProductSchema = z.object({
-  name: z.string().min(1, { message: noneEmptyMessage }),
+  name: z.string().min(1, { message: "không để trống thông tin" }),
   price: z.number({ message: "Dữ liệu không hợp lệ" }),
   fakePrice: z.any(),
   category: z.string().min(1, { message: "Không để trống thông tin" }),
   images: z.any().refine((images) => images !== null || images.length !== 0, {
-    message: noneEmptyMessage,
+    message: "không để trống thông tin",
   }),
   slug: z.string().min(1, "Không để trống thông tin"),
   status: z.string(),

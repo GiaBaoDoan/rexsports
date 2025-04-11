@@ -10,6 +10,9 @@ import BannersReducer from "./slice/banners";
 import BannerByIdReducer from "./slice/bannerById";
 import collectionByIdReducer from "./slice/collectionById";
 import CollectionsReducer from "./slice/collections";
+import ProfileReducer from "./slice/profile";
+import UsersReducer from "./slice/users";
+import UserReducer from "./slice/user";
 import RevenueReducer from "@/store/slice/revenue";
 const rootReducer = combineReducers({
   ProductsReducer,
@@ -24,6 +27,9 @@ const rootReducer = combineReducers({
   BannerByIdReducer,
   collectionByIdReducer,
   RevenueReducer,
+  ProfileReducer,
+  UsersReducer,
+  UserReducer,
 });
 
 export default rootReducer;

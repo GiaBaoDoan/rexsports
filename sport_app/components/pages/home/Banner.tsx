@@ -3,35 +3,35 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { fetchData } from "@/lib/fetchDataServer";
 import { BannerRes } from "@/types/banner";
 import Image from "next/image";
 
-export async function Banner({ banners }: { banners: BannerRes[] }) {
+export const getAllBanners = async () => {
+  return fetchData<BannerRes[]>(`banners`);
+};
+
+export default async function Banner() {
+  const banners = await getAllBanners();
   return (
-    <div>
-      <Carousel>
-        <CarouselContent>
-          {banners?.map(
-            (banner, index) =>
-              banner.status && (
-                <CarouselItem
-                  // onClick={() => router.push(`${banner.link}`)}
-                  key={index}
-                  className="flex justify-center"
-                >
-                  <Image
-                    src={banner.image.url}
-                    width={1200}
-                    height={300}
-                    alt="Banner"
-                    className="object-cover w-full h-[590px] cursor-pointer"
-                    loading="lazy"
-                  />
-                </CarouselItem>
-              )
-          )}
-        </CarouselContent>
-      </Carousel>
-    </div>
+    <Carousel>
+      <CarouselContent>
+        {banners?.map(
+          (banner, index) =>
+            banner.status && (
+              <CarouselItem key={index} className="flex justify-center">
+                <Image
+                  src={banner.image.url}
+                  width={1200}
+                  height={300}
+                  alt="Banner"
+                  className="object-cover w-full min-h-screen cursor-pointer"
+                  loading="lazy"
+                />
+              </CarouselItem>
+            )
+        )}
+      </CarouselContent>
+    </Carousel>
   );
 }

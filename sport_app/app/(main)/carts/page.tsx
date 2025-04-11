@@ -8,6 +8,7 @@ const Cart = () => {
         <h1 className="text-6xl font-bold">Giỏ hàng</h1>
       </article>
       <CartList />
+      {}
       <FormCheckout />
     </div>
   );

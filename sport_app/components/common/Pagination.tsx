@@ -71,7 +71,7 @@ const PaginationCustom = ({ pagination }: { pagination: PaginationRes }) => {
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium">Row per pages: </span>
           <Select
-            value={`${searchParams.get("limit") ?? pagination.limit}`}
+            value={`${searchParams.get("limit") ?? pagination?.limit}`}
             onValueChange={handleLimitPage}
           >
             <SelectTrigger className="w-[80px]">
@@ -96,7 +96,7 @@ const PaginationCustom = ({ pagination }: { pagination: PaginationRes }) => {
           <PaginationItem className="cursor-pointer">
             <Button
               variant="outline"
-              disabled={pagination.currentPage === 1}
+              disabled={pagination?.currentPage === 1}
               onClick={handleFirstPage}
             >
               <MdKeyboardDoubleArrowLeft />
@@ -119,7 +119,7 @@ const PaginationCustom = ({ pagination }: { pagination: PaginationRes }) => {
           <PaginationItem className="cursor-pointer">
             <Button
               variant="outline"
-              disabled={pagination.currentPage === pagination.totalPages}
+              disabled={pagination?.currentPage === pagination?.totalPages}
               onClick={handleLastPage}
             >
               <MdOutlineKeyboardDoubleArrowRight />

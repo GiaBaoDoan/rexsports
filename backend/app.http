@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/collections
+GET http://localhost:5000/api/users
 ###
 GET http://localhost:5000/api/products
 ###
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ###
-GET  http://localhost:5000/api/categories
+GET  http://localhost:5000/api/categories/67c409b4da742a7a94321036
 
 ###
 GET http://localhost:5000/api/dashboard/

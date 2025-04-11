@@ -1,13 +1,18 @@
-"use client";
-
 import ProductCard from "@/components/pages/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/lib/contanst";
+import { fetchData } from "@/lib/fetchDataServer";
 import { ProductRes } from "@/types/product";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
-const ProductBest = ({ products }: { products: ProductRes[] }) => {
-  const router = useRouter();
+const getProductsBestSeller = async () => {
+  return await fetchData<ProductRes[]>("/products");
+};
+
+const ProductBest = async () => {
+  // const router = useRouter();
+
+  const products = await getProductsBestSeller();
 
   return (
     <div className="mx-auto max-w-6xl w-[90%] my-14">
@@ -21,17 +26,15 @@ const ProductBest = ({ products }: { products: ProductRes[] }) => {
         </p>
       </article>
 
-      {/* Danh sách sản phẩm */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {products.slice(0, 4).map((product) => (
+        {products?.slice(0, 4).map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
 
-      {/* Nút Xem thêm */}
       <div className="flex justify-center mt-10">
         <Button
-          onClick={() => router.push(PATH.products.list)}
+          // onClick={() => router.push(PATH.products.list)}
           className="px-6 py-3 bg-gray-900 text-white hover:bg-gray-700 transition rounded-lg"
         >
           Xem thêm

@@ -1,6 +1,6 @@
-import BannerStatus from "@/components/ui/banner-status";
 import EditOrDelete from "@/components/ui/edit-delete";
 import NoData from "@/components/ui/no-data";
+import Status from "@/components/ui/product-status";
 import {
   Table,
   TableBody,
@@ -50,15 +50,15 @@ const BannerTable = () => {
                 <Image
                   src={banner.image.url}
                   alt={banner.title}
-                  width={100}
-                  height={100}
-                  className="rounded-md object-cover shadow"
+                  width={150}
+                  height={150}
+                  className="rounded-md w-32 h-20 object-cover shadow"
                 />
               </TableCell>
               <TableCell>{banner.title}</TableCell>
               <TableCell>{getDate(banner.updatedAt)}</TableCell>
               <TableCell>
-                <BannerStatus status={banner.status} />
+                <Status status={banner.status} />
               </TableCell>
               <TableCell>
                 <a

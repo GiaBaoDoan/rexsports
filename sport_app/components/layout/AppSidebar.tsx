@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import {
@@ -23,7 +25,19 @@ import Link from "next/link";
 const menus = [
   {
     title: "Dashboard",
-    urls: [{ url: PATH.dashboard.list, text: "Quản trị trang" }],
+    urls: [
+      { url: PATH.dashboard.overview, text: "Tổng quan" },
+      { url: PATH.dashboard.report, text: "Báo cáo" },
+    ],
+  },
+
+  {
+    title: "Người dùng",
+    urls: [{ url: PATH.user.list, text: "Quản lý người dùng" }],
+  },
+  {
+    title: "Đơn hàng",
+    urls: [{ url: PATH.orders.list, text: "Quản lý đơn hàng" }],
   },
   {
     title: "Sản phẩm",
@@ -39,10 +53,7 @@ const menus = [
       { url: PATH.categories.add, text: "Thêm danh mục" },
     ],
   },
-  {
-    title: "Đơn hàng",
-    urls: [{ url: PATH.orders.list, text: "Quản lý đơn hàng" }],
-  },
+
   {
     title: "Banner ảnh",
     urls: [
@@ -63,6 +74,10 @@ const menus = [
       { url: PATH.collection.add, text: "Thêm bộ sưu tập" },
     ],
   },
+  // {
+  //   title: "Settings",
+  //   urls: [{ url: PATH.collection.list, text: "Quản lý tài khoản" }],
+  // },
 ];
 
 export const SideBarNavs = {
@@ -87,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <Accordion type="single" collapsible>
                   {item.menus.map((menu) => (
                     <AccordionItem key={menu.title} value={menu.title}>
-                      <AccordionTrigger className="flex font-normal">
+                      <AccordionTrigger className="flex font-normal gap-2">
                         {menu.title}
                       </AccordionTrigger>
                       {menu.urls.map((url, index) => (

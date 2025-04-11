@@ -7,15 +7,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Edit, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PATH } from "@/lib/contanst";
+import EditOrDelete from "@/components/ui/edit-delete";
+import Status from "@/components/ui/product-status";
+import useAsyncAction from "@/hooks/useAsyncAction";
+import { deleteCollection } from "@/store/thunk/delete-collection";
 
 const CollectionTable = () => {
   const { collections } = useAppSelector((state) => state.CollectionsReducer);
-  const router = useRouter();
+
+  const { execute } = useAsyncAction();
+
+  const handleDelete = (id: string) => {
+    execute({
+      actionCreator: () => deleteCollection(id),
+    });
+  };
 
   return (
     <div className="border rounded-lg p-3">
@@ -37,9 +46,9 @@ const CollectionTable = () => {
                 <Image
                   src={collection.image?.url || "/placeholder.jpg"}
                   alt={collection.name}
-                  width={50}
-                  height={50}
-                  className="w-12 h-12 object-cover rounded-md"
+                  width={100}
+                  height={100}
+                  className="w-20 h-20 object-cover rounded-md"
                 />
               </TableCell>
               <TableCell>{collection.name}</TableCell>
@@ -49,27 +58,18 @@ const CollectionTable = () => {
               >
                 {collection.description}
               </TableCell>
-              <TableCell>{collection.products.length}</TableCell>
+              <TableCell className="text-center">
+                {collection.products.length}
+              </TableCell>
               <TableCell>
-                {collection.status ? (
-                  <span className="text-green-600">Hoạt động</span>
-                ) : (
-                  <span className="text-red-500">Tạm dừng</span>
-                )}
+                <Status status={collection.status as boolean} />
               </TableCell>
               <TableCell className="text-right space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    router.push(PATH.collection.edit(collection._id))
-                  }
-                >
-                  <Edit className="w-4 h-4" />
-                </Button>
-                <Button variant="destructive" size="sm">
-                  <Trash className="w-4 h-4" />
-                </Button>
+                <EditOrDelete
+                  onDelete={() => handleDelete(collection._id)}
+                  isLoading={false}
+                  path={PATH.collection.edit(collection._id)}
+                />
               </TableCell>
             </TableRow>
           ))}

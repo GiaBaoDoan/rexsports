@@ -16,7 +16,8 @@ export const PATH = {
     edit: (id: string) => `/dashboard/orders/${id}`,
   },
   dashboard: {
-    list: "/dashboard",
+    overview: "/dashboard/overview",
+    report: "/dashboard/report",
   },
   banner: {
     list: "/dashboard/banners",
@@ -28,6 +29,10 @@ export const PATH = {
     add: "/dashboard/collections/add",
     edit: (id: string) => `/dashboard/collections/${id}`,
   },
+  user: {
+    list: "/dashboard/users",
+    edit: (id: string) => `/dashboard/users/${id}`,
+  },
 };
 
 export const BANK = {
@@ -38,5 +43,3 @@ export const BANK = {
 };
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-export const noneEmptyMessage = "Không để trống thông tin";

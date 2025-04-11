@@ -1,26 +1,20 @@
 "use client";
 
 import ProductForm from "@/components/forms/ProductForm";
+import useFetchData from "@/hooks/use-fetch-data";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { ProductType } from "@/schema/product";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { fetchProduct } from "@/store/thunk/fetch-product";
 import { updateProductThunk } from "@/store/thunk/update-product";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import slugify from "slugify";
 
 const UpdateProductPage = () => {
   const { product } = useAppSelector((state) => state.ProductReducer);
-  const dispatch = useAppDispatch();
-  const { id } = useParams();
   const { execute, isLoading } = useAsyncAction();
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchProduct(`${id}`));
-    }
-  }, [id, dispatch]);
+  const { id } = useParams();
 
   const handleUpdate = (product: ProductType) => {
     execute({
@@ -29,9 +23,10 @@ const UpdateProductPage = () => {
           id: `${id}`,
           product: { ...product, slug: slugify(product.slug) },
         }),
-      callBack: () => dispatch(fetchProduct(`${id}`)),
     });
   };
+
+  useFetchData(() => fetchProduct(`${id}`), [id]);
 
   const productData = useMemo<ProductType>(
     () => ({

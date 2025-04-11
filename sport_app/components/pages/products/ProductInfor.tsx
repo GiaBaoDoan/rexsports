@@ -1,10 +1,9 @@
 "use client";
 
 import { formatCurrency } from "@/lib/format";
-import { useAppSelector } from "@/store/store";
+import { ProductRes } from "@/types/product";
 
-const ProductInfor = () => {
-  const { product } = useAppSelector((state) => state.ProductReducer);
+const ProductInfor = ({ product }: { product: ProductRes }) => {
   return (
     <div className="space-y-4">
       <article>

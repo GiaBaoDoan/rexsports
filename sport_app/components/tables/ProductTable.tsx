@@ -17,10 +17,10 @@ import { fetchProductsThunk } from "@/store/thunk/fetch-products";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getDate } from "@/lib/date";
 import { Tooltip } from "@/components/ui/tooltip";
-import ProductStatus from "@/components/ui/product-status";
 import EditOrDelete from "@/components/ui/edit-delete";
 import NoData from "@/components/ui/no-data";
 import Loading from "@/components/ui/loading";
+import Status from "@/components/ui/product-status";
 
 const ProductsTable = () => {
   const { products, isLoading, isFetched } = useAppSelector(
@@ -75,7 +75,7 @@ const ProductsTable = () => {
               <TableCell>{getDate(product.updatedAt)}</TableCell>
               <TableCell>{formatCurrency(product.price)}</TableCell>
               <TableCell>
-                <ProductStatus data={product} />
+                <Status status={product.status} />
               </TableCell>
               <TableCell className="flex h-[100px] justify-end items-center">
                 <EditOrDelete

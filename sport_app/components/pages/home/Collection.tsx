@@ -1,11 +1,16 @@
-"use client";
-
+import { fetchData } from "@/lib/fetchDataServer";
 import { cn } from "@/lib/utils";
 
 import { CollectionResType } from "@/types/collection";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-const Collections = ({ collections }: { collections: CollectionResType[] }) => {
+const getAllCollections = async () => {
+  return await fetchData<CollectionResType[]>("collections");
+};
+
+const Collections = async () => {
+  const collections = await getAllCollections();
   return (
     <div className="my-10 w-[90%] mx-auto space-y-10">
       {collections?.map((collection, index) => (

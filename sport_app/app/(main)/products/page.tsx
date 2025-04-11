@@ -1,9 +1,25 @@
 import { ProductFilter } from "@/components/filters";
 import ProductList from "@/components/pages/products/ProductsList";
 import Loading from "@/components/ui/loading";
+import { API_URL } from "@/lib/contanst";
+import { fetchData } from "@/lib/fetchDataServer";
+import { ProductRes } from "@/types/product";
 import { Suspense } from "react";
 
-export default async function Products() {
+const getAllProducts = async (params?: {
+  category?: string;
+  sortByPrice?: string;
+}) => {
+  return await fetchData<ProductRes[]>(`/products`, params);
+};
+
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: { category: string; sortByPrice: string };
+}) {
+  const products = await getAllProducts(searchParams);
+
   return (
     <div className="max-w-6xl mx-auto my-16 px-4 md:px-6">
       <article className="mb-8">
@@ -16,7 +32,7 @@ export default async function Products() {
       </article>
       <Suspense fallback={<Loading />}>
         <ProductFilter />
-        <ProductList />
+        <ProductList products={products as ProductRes[]} />
       </Suspense>
     </div>
   );

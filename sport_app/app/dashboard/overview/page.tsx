@@ -1,6 +1,6 @@
 import Dashboard from "@/components/admin/dashboard/Dashboard";
 
-const DashboardPage = () => {
+const OverviewPage = () => {
   const formatter = new Intl.DateTimeFormat("vi-VN", {
     weekday: "long",
     day: "numeric",
@@ -19,4 +19,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default OverviewPage;

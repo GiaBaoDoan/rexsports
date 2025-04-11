@@ -22,7 +22,6 @@ const ProductFilter = () => {
   const debouncedName = useDebouncedValue(name, 500);
   const { updateQuery } = useQueryParams();
 
-  // Memoized category options
   const categoryOptions = useMemo(
     () =>
       categories.map((cat) => (
@@ -48,7 +47,7 @@ const ProductFilter = () => {
         />
 
         {/* Lọc theo danh mục */}
-        <Select onValueChange={(cat) => updateQuery("cat", cat)}>
+        <Select onValueChange={(cat) => updateQuery("category", cat)}>
           <SelectTrigger className="cursor-pointer">
             <SelectValue placeholder="Danh mục" />
           </SelectTrigger>
@@ -59,18 +58,13 @@ const ProductFilter = () => {
         </Select>
 
         {/* Lọc theo giá */}
-        <Select
-          onValueChange={(isSortPrice) =>
-            updateQuery("isSortPrice", isSortPrice)
-          }
-        >
+        <Select onValueChange={(price) => updateQuery("sortByPrice", price)}>
           <SelectTrigger>
             <SelectValue placeholder="Giá" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="null">Tất cả</SelectItem>
-            <SelectItem value="false">Tăng dần</SelectItem>
-            <SelectItem value="true">Giảm dần</SelectItem>
+            <SelectItem value="asc">Tăng dần</SelectItem>
+            <SelectItem value="desc">Giảm dần</SelectItem>
           </SelectContent>
         </Select>
       </div>

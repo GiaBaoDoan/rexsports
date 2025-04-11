@@ -27,7 +27,7 @@ const AdminOrder = () => {
 
   return (
     <div>
-      <h1 className="font-semibold text-3xl">Đơn hàng</h1>
+      <h1 className="font-semibold text-3xl mb-5">Đơn hàng</h1>
       <div className="grid grid-cols-4 gap-5">
         <Card className="col-span-3">
           <CardHeader className="flex justify-between flex-row mb-5">

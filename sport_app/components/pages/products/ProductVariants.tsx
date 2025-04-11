@@ -10,13 +10,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { cn } from "@/lib/utils";
 
-const ProductVariants = () => {
+const ProductVariants = ({ product }: { product: ProductRes }) => {
   const dispatch = useDispatch();
 
   const { toast } = useToast();
   const [idActive, setIdActive] = useState<string>("");
-
-  const { product } = useAppSelector((state) => state.ProductReducer);
 
   const onAddToCart = () => {
     const { variants, name, price } = product as ProductRes;

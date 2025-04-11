@@ -24,7 +24,7 @@ const Header = () => {
           </Link>
         </ul>
         <div className="btns items-center flex gap-5">
-          <HeaderDropDownMenu />
+          {/* <HeaderDropDownMenu /> */}
           <HeaderCart />
           {/* <FindCart /> */}
         </div>

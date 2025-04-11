@@ -6,12 +6,13 @@ const {
   getCollectionByIdOrSlug,
   updateCollection,
 } = require("../controllers/collection.controller");
+const UploadMiddleware = require("../middleware/upload.middleware");
 
 const router = express.Router();
 
-router.post("/", createCollection);
+router.post("/", UploadMiddleware("collections"), createCollection);
+router.put("/:id", UploadMiddleware("collections"), updateCollection);
 router.get("/:idOrSlug", getCollectionByIdOrSlug);
-router.put("/:idOrSlug", updateCollection);
 router.get("/", getAllCollections);
 router.delete("/:id", deleteCollection);
 

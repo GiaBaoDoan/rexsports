@@ -7,11 +7,12 @@ import Link from "next/link";
 import PaginationCustom from "@/components/common/Pagination";
 import ProductFilter from "@/components/filters/ProductFilter";
 import ProductsTable from "@/components/tables/ProductTable";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { fetchProductsThunk } from "@/store/thunk/fetch-products";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import Loading from "@/components/ui/loading";
+import useFetchData from "@/hooks/use-fetch-data";
 
 const ProductPage = () => {
   return (
@@ -24,13 +25,9 @@ const ProductPage = () => {
 const ProductPageContent = () => {
   const { pagination } = useAppSelector((state) => state.ProductsReducer);
 
-  const dispatch = useAppDispatch();
-
   const queries = useSearchParams();
 
-  useEffect(() => {
-    dispatch(fetchProductsThunk(`${queries}&isAdmin=true`));
-  }, [queries, dispatch]);
+  useFetchData(() => fetchProductsThunk(`${queries}`), [queries]);
 
   return (
     <section className="space-y-5">
