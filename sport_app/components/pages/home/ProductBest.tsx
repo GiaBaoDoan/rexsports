@@ -1,7 +1,9 @@
 import ProductCard from "@/components/pages/products/ProductCard";
 import { Button } from "@/components/ui/button";
+import { PATH } from "@/lib/contanst";
 import { fetchData } from "@/lib/fetchDataServer";
 import { ProductRes } from "@/types/product";
+import Link from "next/link";
 
 const getProductsBestSeller = async () => {
   return await fetchData<ProductRes[]>("/products");
@@ -12,7 +14,6 @@ const ProductBest = async () => {
 
   return (
     <div className="mx-auto max-w-6xl w-[90%] my-14">
-      {/* Tiêu đề & Mô tả */}
       <article>
         <h1 className="underline text-3xl md:text-4xl font-bold mb-4 text-gray-800">
           BEST SELLER
@@ -29,12 +30,11 @@ const ProductBest = async () => {
       </div>
 
       <div className="flex justify-center mt-10">
-        <Button
-          // onClick={() => router.push(PATH.products.list)}
-          className="px-6 py-3 bg-gray-900 text-white hover:bg-gray-700 transition rounded-lg"
-        >
-          Xem thêm
-        </Button>
+        <Link href={PATH.products.list}>
+          <Button className="px-6 py-3 bg-gray-900 text-white hover:bg-gray-700 transition rounded-lg">
+            Xem thêm
+          </Button>
+        </Link>
       </div>
     </div>
   );

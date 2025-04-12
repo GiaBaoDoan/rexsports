@@ -5,7 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormField,
@@ -16,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { requestResetPasswordThunk } from "@/store/thunk/request-resetPassword";
+import Link from "next/link";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Yêu cầu email").email("Email không hợp lệ"),
@@ -28,13 +35,11 @@ const ResetWithEmailForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const { execute } = useAsyncAction();
+  const { execute, isLoading } = useAsyncAction();
 
   const onSubmit = (data: FormType) => {
     execute({
-      actionCreator: () => {
-        return requestResetPasswordThunk(data.email);
-      },
+      actionCreator: () => requestResetPasswordThunk(data.email),
     });
   };
 
@@ -61,11 +66,19 @@ const ResetWithEmailForm = () => {
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button disabled={isLoading} type="submit" className="w-full">
               Reset mật khẩu với email
             </Button>
           </form>
         </Form>
+        <CardFooter className="text-xs justify-center">
+          <Link
+            href="/auth/login"
+            className="text-red-600 hover:underline ml-1"
+          >
+            <span>Quay lại trang đăng nhập</span>
+          </Link>
+        </CardFooter>
       </CardContent>
     </Card>
   );

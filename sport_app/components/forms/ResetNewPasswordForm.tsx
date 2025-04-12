@@ -5,7 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormField,
@@ -17,6 +23,7 @@ import {
 import { useParams } from "next/navigation";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { resetNewPassword } from "@/store/thunk/reset-newPassword";
+import Link from "next/link";
 
 const FormSchema = z.object({
   password: z
@@ -37,7 +44,7 @@ const ResetNewPasswordForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const { execute } = useAsyncAction();
+  const { execute, isLoading } = useAsyncAction();
 
   const { id, token } = useParams();
 
@@ -76,11 +83,19 @@ const ResetNewPasswordForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button disabled={isLoading} type="submit" className="w-full">
               Đặt lại mật khẩu mới
             </Button>
           </form>
         </Form>
+        <CardFooter className="text-xs justify-center">
+          <Link
+            href="/auth/login"
+            className="text-red-600 hover:underline ml-1"
+          >
+            <span>Quay lại trang đăng nhập</span>
+          </Link>
+        </CardFooter>
       </CardContent>
     </Card>
   );

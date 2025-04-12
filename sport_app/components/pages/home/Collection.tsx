@@ -1,7 +1,9 @@
+import { PATH } from "@/lib/contanst";
 import { fetchData } from "@/lib/fetchDataServer";
 import { cn } from "@/lib/utils";
 import { CollectionResType } from "@/types/collection";
 import Image from "next/image";
+import Link from "next/link";
 
 const getAllCollections = async () => {
   return await fetchData<CollectionResType[]>("collections");
@@ -33,14 +35,13 @@ const Collections = async () => {
             <div className="w-full md:w-[427px] text-neutral-500 text-[10px] md:text-base font-normal">
               {collection.description}
             </div>
-            <div
-              // onClick={() => router.push(`/collection/${collection.slug}`)}
-              className="cursor-pointer px-[6px] py-[4px] md:px-[18px] md:py-[9px] w-20 md:w-auto bg-neutral-700 rounded-sm md:rounded-xl justify-center items-center gap-2.5 inline-flex"
-            >
-              <div className="text-white text-opacity-80 text-[10px] md:text-base font-normal">
-                Xem thêm
+            <Link href={`/collection/${collection.slug}`}>
+              <div className="cursor-pointer px-[6px] py-[4px] md:px-[18px] md:py-[9px] w-20 md:w-auto bg-neutral-700 rounded-sm md:rounded-xl justify-center items-center gap-2.5 inline-flex">
+                <div className="text-white text-opacity-80 text-[10px] md:text-base font-normal">
+                  Xem thêm
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       ))}
