@@ -1,4 +1,3 @@
-import { PATH } from "@/lib/contanst";
 import { fetchData } from "@/lib/fetchDataServer";
 import { cn } from "@/lib/utils";
 import { CollectionResType } from "@/types/collection";
