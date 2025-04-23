@@ -1,21 +1,19 @@
+import { ImageSchema } from "@/schema/image";
+import { PhoneSchema } from "@/schema/phoneNumber";
 import { z } from "zod";
 
 export const ProfileFormSchema = z.object({
-  image: z.any(),
-  name: z.string().min(2, {
-    message: "Tên phải có ít nhất 2 ký tự.",
+  image: ImageSchema,
+  name: z.string().min(1, {
+    message: "Không được để trống tên",
   }),
-  phone: z
-    .string()
-    .min(10, { message: "Số điện thoại phải có ít nhất 10 ký tự." })
-    .optional()
-    .default(""),
-  address: z.string().optional().default(""),
-  description: z.string().optional().default(""),
+  phone: PhoneSchema,
+  address: z.optional(z.string()),
+  description: z.optional(z.string()),
 });
 
 export const defaultValues: ProfileReqType = {
-  image: null,
+  image: "",
   name: "",
   address: "",
   description: "",

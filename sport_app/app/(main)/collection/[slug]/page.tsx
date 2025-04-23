@@ -21,9 +21,12 @@ export default async function CollectionPage({
       </article>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {collection?.products?.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+        {collection?.products?.map(
+          (product) =>
+            product.status && (
+              <ProductCard key={product._id} product={product} />
+            )
+        )}
       </div>
     </div>
   );

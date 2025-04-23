@@ -14,6 +14,7 @@ import ProfileReducer from "./slice/profile";
 import UsersReducer from "./slice/users";
 import UserReducer from "./slice/user";
 import RevenueReducer from "@/store/slice/revenue";
+import ReportReducer from "@/store/slice/getReport";
 const rootReducer = combineReducers({
   ProductsReducer,
   ProductReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   RevenueReducer,
   ProfileReducer,
   UsersReducer,
+  ReportReducer,
   UserReducer,
 });
 

@@ -16,14 +16,14 @@ import { getDate } from "@/lib/date";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { deleteOrderThunk } from "@/store/thunk/delete-order";
 import { fetchOrders } from "@/store/thunk/fetch-orders";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppDispatch } from "@/store/store";
 import OrderPaid from "@/components/ui/order-paid";
 import EditOrDelete from "@/components/ui/edit-delete";
 import OrderShipping from "@/components/ui/order-shipping";
 import NoData from "@/components/ui/no-data";
+import { OrderResType } from "@/types/order";
 
-const OrdersTable = () => {
-  const { orders } = useAppSelector((state) => state.OrdersReducer);
+const OrdersTable = ({ orders }: { orders: OrderResType[] | [] }) => {
   const dispatch = useAppDispatch();
 
   const { execute, isLoading } = useAsyncAction();
@@ -52,7 +52,7 @@ const OrdersTable = () => {
         </TableHeader>
         {/* body render orders */}
         <TableBody>
-          {orders.map((order, index) => {
+          {orders?.map((order, index) => {
             return (
               <TableRow key={index}>
                 <TableCell>
@@ -85,7 +85,7 @@ const OrdersTable = () => {
           })}
         </TableBody>
       </Table>
-      {orders.length === 0 && <NoData />}
+      {orders?.length === 0 && <NoData />}
     </div>
   );
 };

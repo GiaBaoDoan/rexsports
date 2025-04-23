@@ -24,14 +24,11 @@ const formSchema = z.object({
 export function LookupForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      phone: "",
-    },
   });
 
   const dispatch = useAppDispatch();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: { phone: string }) {
     dispatch(fetchOrders(`phone=${values.phone}`));
   }
 
@@ -46,7 +43,7 @@ export function LookupForm() {
               <FormControl className="flex">
                 <div>
                   <Input
-                    placeholder="Số điện thoại hoặc mã đơn hàng"
+                    placeholder="Nhập số điện thoại..."
                     className="py-6 rounded-r-none"
                     {...field}
                   />

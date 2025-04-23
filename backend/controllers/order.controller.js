@@ -1,4 +1,3 @@
-const { parse } = require("dotenv");
 const httpStatus = require("../constants/httpStatus");
 const MESSAGE = require("../constants/messages");
 const OrderServices = require("../services/order.service");
@@ -13,6 +12,7 @@ const createOrder = async (req, res, next) => {
       data: order,
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
@@ -84,10 +84,28 @@ const deleteOrder = async (req, res, next) => {
   }
 };
 
+const sendOrderConfirmationEmail = async (req, res, next) => {
+  try {
+    const order = await OrderServices.sendOrderConfirmationEmail(
+      req.params.orderId
+    );
+
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: "Đã gửi đơn hàng tới email !!",
+      data: order,
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrders,
   getOrderById,
   UpdateOrder,
   deleteOrder,
+  sendOrderConfirmationEmail,
 };

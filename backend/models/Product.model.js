@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
+const ImageSchema = require("./Image.schema");
 
 const VariantSchema = new mongoose.Schema({
-  icon: {
-    url: String,
-    publicId: String,
-  },
+  icon: ImageSchema,
   size: { type: String, required: true },
   color: { type: String, required: true },
   stock: { type: Number, required: true },
@@ -16,12 +14,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     description: { type: String, required: true },
-    images: [
-      {
-        url: String,
-        publicId: String,
-      },
-    ],
+    images: [ImageSchema],
     fakePrice: { type: Number, required: false },
     slug: {
       type: String,
@@ -31,7 +24,10 @@ const productSchema = new mongoose.Schema(
     status: {
       type: Boolean,
       default: true,
-      required: true,
+    },
+    sold: {
+      type: Number,
+      default: 0,
     },
     variants: [VariantSchema],
   },

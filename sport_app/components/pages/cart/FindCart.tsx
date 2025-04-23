@@ -2,7 +2,6 @@
 
 import { LookupForm } from "@/components/forms/LookupForm";
 import CartItem from "@/components/pages/cart/CartItem";
-import { Button } from "@/components/ui/button";
 import Loading from "@/components/ui/loading";
 import {
   Sheet,
@@ -12,8 +11,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAppSelector } from "@/store/store";
+import { TextSearch } from "lucide-react";
 import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
 
 export function FindCart() {
   const { orders, isLoading } = useAppSelector((state) => state.OrdersReducer);
@@ -21,35 +20,44 @@ export function FindCart() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="secondary">
-          <FaSearch />
-        </Button>
+        <TextSearch className="cursor-pointer" size={30} />
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto !max-w-[30rem]">
-        <SheetHeader>
-          <SheetTitle className="uppercase">Tra cứu đơn hàng</SheetTitle>
+      <SheetContent className="overflow-y-auto !max-w-[30rem] p-6 bg-white shadow-lg rounded-xl">
+        <SheetHeader className="mb-5">
+          <SheetTitle className="uppercase text-xl font-semibold text-gray-800">
+            Tra cứu đơn hàng
+          </SheetTitle>
         </SheetHeader>
-        <LookupForm />
-        <div className="space-y-3">
+
+        <div className="mb-6">
+          <LookupForm />
+        </div>
+
+        <div className="space-y-4">
           {!isLoading ? (
-            orders.map((order, index) => <CartItem key={index} order={order} />)
+            orders.length > 0 ? (
+              orders.map((order, index) => (
+                <CartItem key={index} order={order} />
+              ))
+            ) : (
+              <div className="flex justify-center flex-col items-center my-10 gap-3">
+                <Image
+                  alt="Tra cứu đơn hàng"
+                  width={100}
+                  height={100}
+                  src="https://food-order.vinhweb.com/illustrations/tra-cuu.svg"
+                />
+                <p className="text-center text-gray-600">
+                  Nhập số điện thoại/email để kiểm tra tình trạng đơn hàng
+                </p>
+              </div>
+            )
           ) : (
-            <Loading />
+            <div className="flex justify-center items-center my-10">
+              <Loading />
+            </div>
           )}
         </div>
-        {orders.length === 0 && (
-          <div className="flex justify-center flex-col items-center my-10 gap-3">
-            <Image
-              alt="Tra cứu đơn hàng"
-              width={100}
-              height={100}
-              src="https://food-order.vinhweb.com/illustrations/tra-cuu.svg"
-            ></Image>
-            <p className="text-center">
-              Nhập số điện thoại/mã đơn để kiểm tra tình trạng đơn hàng
-            </p>
-          </div>
-        )}
       </SheetContent>
     </Sheet>
   );

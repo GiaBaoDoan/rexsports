@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/format";
 import { ProductRes } from "@/types/product";
 
 const ProductInfor = ({ product }: { product: ProductRes }) => {
+  const isFakePrice = product?.fakePrice !== 0;
   return (
     <div className="space-y-4">
       <article>
@@ -18,14 +19,14 @@ const ProductInfor = ({ product }: { product: ProductRes }) => {
         <p className="text-lg font-semibold text-red-500">
           {formatCurrency(product?.price)}
         </p>
-        {product?.fakePrice && (
+        {isFakePrice && (
           <span className="text-gray-500 text-sm line-through">
             {formatCurrency(product?.fakePrice)}
           </span>
         )}
       </div>
 
-      {product?.fakePrice && (
+      {isFakePrice && (
         <div className="text-sm">
           <span className="text-gray-600">Tiết kiệm: </span>
           <span className="text-green-500 font-medium">

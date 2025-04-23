@@ -11,6 +11,7 @@ const TokenServices = require("../services/token.service");
 
 const { CLIENT_URL } = require("../config/env.config");
 const TYPE_EMAIL = require("../constants/typeEmail");
+const generateEmailTemplate = require("../constants/html");
 
 const signup = async (data) => {
   const user = await User.findOne({ email: data.email });
@@ -25,7 +26,9 @@ const signup = async (data) => {
   const token = await TokenServices.createHashToken(newUser._id);
 
   const link = `${CLIENT_URL}/auth/verify/${newUser._id}/${token}`;
-  await sendEmail(newUser.email, TYPE_EMAIL.verify, link);
+
+  const html = generateEmailTemplate(TYPE_EMAIL.verify, link);
+  await sendEmail(newUser.email, TYPE_EMAIL.verify, html);
 
   return newUser;
 };
@@ -112,7 +115,8 @@ const requestPasswordReset = async (email) => {
   const token = await TokenServices.createHashToken(user._id);
 
   const link = `${CLIENT_URL}/auth/reset-password/${user._id}/${token}`;
-  await sendEmail(user.email, TYPE_EMAIL.reset, link);
+  const html = generateEmailTemplate(TYPE_EMAIL.verify, link);
+  await sendEmail(user.email, TYPE_EMAIL.reset, html);
 
   return user;
 };

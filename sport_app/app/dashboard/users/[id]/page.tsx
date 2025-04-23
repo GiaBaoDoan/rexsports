@@ -1,6 +1,7 @@
 "use client";
 
 import UserForm, { UserReqType } from "@/components/forms/UserForm";
+import Loading from "@/components/ui/loading";
 import useFetchData from "@/hooks/use-fetch-data";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { useAppSelector } from "@/store/store";
@@ -12,7 +13,7 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const UserDetailPage = () => {
-  const { user } = useAppSelector((state) => state.UserReducer);
+  const { user, isLoading } = useAppSelector((state) => state.UserReducer);
   const { id } = useParams();
   const { execute, isLoading: isSumiting } = useAsyncAction();
 
@@ -37,6 +38,8 @@ const UserDetailPage = () => {
       actionCreator: () => UpdateUserThunk({ id: id as string, user }),
     });
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div>

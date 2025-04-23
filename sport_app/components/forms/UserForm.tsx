@@ -27,10 +27,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import Avatar from "@/components/ui/avatar";
 import { ImageType } from "@/types/product";
+import { ImageSchema } from "@/schema/image";
 
 const formSchema = z.object({
   email: z.string().email(),
-  image: z.any(),
+  image: ImageSchema,
   name: z.string().min(1, { message: "không để trống thông tin" }),
   phone: z.string().optional(),
   address: z.string().optional(),
@@ -52,9 +53,7 @@ type props = {
 const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
   const form = useForm<UserReqType>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
+    defaultValues: user,
   });
 
   useEffect(() => {
@@ -164,22 +163,19 @@ const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
                 <FormLabel className="font-semibold text-gray-700">
                   Quyền
                 </FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={(data) => field.onChange(data)}
-                    value={field.value}
-                  >
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Chọn quyền" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="user">Người dùng</SelectItem>
-                        <SelectItem value="admin">Quản trị viên</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="user">Người dùng</SelectItem>
+                      <SelectItem value="admin">Quản trị viên</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
                 <FormDescription>Phân quyền người dùng</FormDescription>
                 <FormMessage />
               </FormItem>
@@ -194,22 +190,19 @@ const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
                 <FormLabel className="font-semibold text-gray-700">
                   Trạng thái
                 </FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={(data) => field.onChange(data)}
-                    value={field.value}
-                  >
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Chọn trạng thái" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="true">Công khai</SelectItem>
-                        <SelectItem value="false">Nháp</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="true">Công khai</SelectItem>
+                      <SelectItem value="false">Ẩn danh</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
                 <FormDescription>
                   Chọn trạng thái hiển thị hồ sơ
                 </FormDescription>

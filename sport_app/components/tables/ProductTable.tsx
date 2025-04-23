@@ -52,7 +52,7 @@ const ProductsTable = () => {
             <TableRow key={index}>
               <TableCell>
                 <Image
-                  src={product.images[0].url}
+                  src={product.images[0]?.url}
                   alt="ảnh"
                   width={300}
                   height={300}

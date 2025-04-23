@@ -5,7 +5,7 @@ const Status = ({ status }: { status: boolean }) => {
         status ? "bg-blue-600" : "bg-red-600"
       } `}
     >
-      {status ? "Công khai" : "Ngưng"}
+      {status ? "Công khai" : "Ẩn danh"}
     </span>
   );
 };

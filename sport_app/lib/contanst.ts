@@ -11,6 +11,9 @@ export const PATH = {
     add: `/dashboard/categories/add`,
     edit: (id: string) => `/dashboard/categories/${id}`,
   },
+  settings: {
+    list: "/dashboard/settings",
+  },
   orders: {
     list: "/dashboard/orders",
     edit: (id: string) => `/dashboard/orders/${id}`,

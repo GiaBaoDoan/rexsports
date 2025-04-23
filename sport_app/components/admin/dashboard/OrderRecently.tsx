@@ -7,11 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { CgArrowTopRight } from "react-icons/cg";
 
 const OrderRecently = () => {
   const router = useRouter();
+
+  const { orders } = useAppSelector((state) => state.OrdersReducer);
 
   return (
     <Card className="mt-10">
@@ -27,7 +30,7 @@ const OrderRecently = () => {
         </Button>
       </CardHeader>
       <CardContent>
-        <OrdersTable />
+        <OrdersTable orders={orders} />
       </CardContent>
     </Card>
   );

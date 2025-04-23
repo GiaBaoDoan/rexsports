@@ -29,9 +29,9 @@ const getCollectionByIdOrSlug = async (idOrSlug) => {
 };
 
 const updateCollection = async (id, data) => {
-  const newCollection = await Collection.findOneAndUpdate(
+  const newCollection = await Collection.findByIdAndUpdate(
     id,
-    { ...data, status: data.status === "true" },
+    { ...data, status: data.status },
     { new: true }
   );
 

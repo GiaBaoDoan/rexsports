@@ -4,18 +4,12 @@ import Link from "next/link";
 import CollectionTable from "@/components/tables/CollectionTable";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/lib/contanst";
-import { useAppDispatch } from "@/store/store";
 import { getAllCollections } from "@/store/thunk/fetch-collections";
-import { useEffect } from "react";
 import CollectionFilter from "@/components/filters/CollectionFilter";
+import useFetchData from "@/hooks/use-fetch-data";
 
 const CollectionPage = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllCollections());
-  }, [dispatch]);
-
+  useFetchData(getAllCollections, []);
   return (
     <section>
       <header className="flex flex-wrap justify-between items-center gap-3 mb-7">

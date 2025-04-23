@@ -11,20 +11,28 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
-import { Switch } from "@/components/ui/switch";
 import { useEffect } from "react";
 import { convertToBase64 } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import {
+  bannerDefaultValues,
   bannerFormSchema,
   BannerRequestForm,
-  defaultValues,
 } from "@/schema/banner";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Props = {
-  banner?: BannerRequestForm | null;
+  banner?: BannerRequestForm;
   onSubmit: (data: BannerRequestForm) => void;
   isSubmiting: boolean;
 };
@@ -32,7 +40,7 @@ type Props = {
 export default function BannerForm({ banner, onSubmit, isSubmiting }: Props) {
   const form = useForm<BannerRequestForm>({
     resolver: zodResolver(bannerFormSchema),
-    defaultValues,
+    defaultValues: banner || bannerDefaultValues,
   });
 
   const image = form.watch("image");
@@ -46,117 +54,126 @@ export default function BannerForm({ banner, onSubmit, isSubmiting }: Props) {
   return (
     <Form {...form}>
       <form
+        className="grid grid-cols-3 gap-4 items-start"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-4 border rounded-lg shadow"
       >
-        {/* Tiêu đề */}
-        <FormField
-          disabled={isSubmiting}
-          name="title"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tiêu đề</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Nhập tiêu đề banner" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="space-y-6 p-4 border rounded-lg shadow col-span-2">
+          <FormField
+            name="image"
+            control={form.control}
+            render={({ field: { onChange } }) => (
+              <FormItem>
+                <FormLabel>Ảnh banner</FormLabel>
+                <FormControl>
+                  <Input
+                    onChange={(event) => {
+                      if (event.target.files && event.target.files[0]) {
+                        convertToBase64(event.target.files[0]).then(onChange);
+                      }
+                    }}
+                    type="file"
+                    accept="image/*"
+                  />
+                </FormControl>
+                {image && (
+                  <Image
+                    src={typeof image === "string" ? image : image.url}
+                    alt="Ảnh banner"
+                    width={150}
+                    height={80}
+                    className="mt-2 object-cover rounded-lg"
+                  />
+                )}
 
-        <FormField
-          name="image"
-          control={form.control}
-          render={({ field: { onChange } }) => (
-            <FormItem>
-              <FormLabel>Ảnh banner</FormLabel>
-              <FormControl>
-                <Input
-                  onChange={(event) => {
-                    if (event.target.files) {
-                      convertToBase64(event.target.files[0]).then((image) => {
-                        onChange(image);
-                      });
-                    }
-                  }}
-                  type="file"
-                  accept="image/*"
-                />
-              </FormControl>
-              {image && (
-                <Image
-                  src={typeof image === "string" ? image : image.url}
-                  alt="Ảnh banner"
-                  width={150}
-                  height={80}
-                  className="mt-2 object-cover"
-                />
-              )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            disabled={isSubmiting}
+            name="title"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tiêu đề</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Nhập tiêu đề banner" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            disabled={isSubmiting}
+            name="link"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Link tới sản phẩm</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="https://example.com" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            disabled={isSubmiting}
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mô tả</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="min-h-[100px]"
+                    {...field}
+                    placeholder="Mô tả banner"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="border rounded-lg shadow space-y-4 p-5">
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold text-gray-700">
+                  Trạng thái
+                </FormLabel>
+                <Select
+                  value={`${field.value === undefined ? true : field.value}`}
+                  onValueChange={(value) => field.onChange(value === "true")}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn trạng thái" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="true">Công khai</SelectItem>
+                      <SelectItem value="false">Ẩn danh</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Chọn trạng thái hiển thị banners
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* Đường dẫn */}
-        <FormField
-          disabled={isSubmiting}
-          name="link"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Đường dẫn</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="https://example.com" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Nội dung mô tả */}
-        <FormField
-          disabled={isSubmiting}
-          name="description"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mô tả</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="min-h-[150px]"
-                  {...field}
-                  placeholder="Nhập tiêu đề banner"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Trạng thái */}
-        <FormField
-          disabled={isSubmiting}
-          name="status"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-1">
-              <FormLabel>Hiển thị</FormLabel>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button disabled={isSubmiting} type="submit">
-          Lưu banner
-        </Button>
+          <Button disabled={isSubmiting} type="submit" className="w-full">
+            Lưu thông tin
+          </Button>
+        </div>
       </form>
     </Form>
   );

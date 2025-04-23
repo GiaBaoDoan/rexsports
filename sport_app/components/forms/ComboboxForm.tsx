@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -19,23 +21,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useFetchData from "@/hooks/use-fetch-data";
 import { cn } from "@/lib/utils";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { fetchProductsThunk } from "@/store/thunk/fetch-products";
 import { CollectionResType } from "@/types/collection";
 import { ProductRes } from "@/types/product";
 import { Check, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 const ComboboxForm = () => {
   const form = useFormContext<CollectionResType>();
 
-  const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.ProductsReducer);
 
-  const productValues = (form.watch("products") as ProductRes[]) || [];
+  const productValues = form.watch("products") || [];
 
   const toggleSelect = (product: ProductRes) => {
     const exists = productValues.some((prd) => prd._id === product._id);
@@ -49,9 +51,7 @@ const ComboboxForm = () => {
 
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchProductsThunk(""));
-  }, [form, dispatch]);
+  useFetchData(() => fetchProductsThunk(""), []);
 
   return (
     <FormField
@@ -117,34 +117,32 @@ const ComboboxForm = () => {
               </Command>
             </PopoverContent>
           </Popover>
-          <FormDescription>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
-              {productValues?.map((value) => (
-                <div
-                  key={value._id}
-                  className="relative group flex flex-col items-center bg-gray-100 p-2 rounded-lg shadow-sm border"
+          <FormDescription className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
+            {productValues?.map((value) => (
+              <div
+                key={value._id}
+                className="relative group flex flex-col items-center bg-gray-100 p-2 rounded-lg shadow-sm border"
+              >
+                <Image
+                  src={value?.images[0]?.url || "/placeholder.jpg"}
+                  alt={value.name}
+                  width={80}
+                  height={80}
+                  className="object-cover w-[80px] h-[80px] rounded-md"
+                />
+
+                <span className="text-sm text-gray-700 mt-2 text-center">
+                  {value.name}
+                </span>
+
+                <button
+                  onClick={() => toggleSelect(value)}
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                 >
-                  <Image
-                    src={value?.images[0]?.url || "/placeholder.jpg"}
-                    alt={value.name}
-                    width={80}
-                    height={80}
-                    className="object-cover w-[80px] h-[80px] rounded-md"
-                  />
-
-                  <span className="text-sm text-gray-700 mt-2 text-center">
-                    {value.name}
-                  </span>
-
-                  <button
-                    onClick={() => toggleSelect(value)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
-                  >
-                    ✕
-                  </button>
-                </div>
-              ))}
-            </div>
+                  ✕
+                </button>
+              </div>
+            ))}
           </FormDescription>
 
           <FormMessage />

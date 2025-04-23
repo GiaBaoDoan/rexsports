@@ -20,7 +20,7 @@ export const revenueSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchRevenue.fulfilled, (state, action) => {
-      state.revenue = action.payload.data as RevenueRes;
+      state.revenue = action.payload.data;
       state.isLoading = false;
     });
     builder.addCase(fetchRevenue.pending, (state) => {

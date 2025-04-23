@@ -36,9 +36,9 @@ export default function Profile() {
         {profile?.image ? (
           <Image
             src={`${profile?.image?.url}`}
-            className="w-10 h-10 object-cover rounded-full"
-            width={150}
-            height={80}
+            className="w-12 h-12 object-cover rounded-full"
+            width={300}
+            height={300}
             alt="Avatar"
           />
         ) : (

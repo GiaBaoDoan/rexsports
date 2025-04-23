@@ -1,5 +1,5 @@
-import { loginType } from "@/components/forms/LoginForm";
 import AxiosInstance from "@/lib/configAxios";
+import { LoginSchemaType } from "@/schema/login";
 import { UpdatePasswordType } from "@/schema/password";
 import { ProfileReqType } from "@/schema/profile";
 import { signupType } from "@/store/thunk/signup";
@@ -25,7 +25,7 @@ export const AuthServices = {
     AxiosInstance.put<ApiResponse<UserResType>>("/auth/me", data),
   updatePassword: (data: UpdatePasswordType) =>
     AxiosInstance.put<ApiResponse<UserResType>>("/auth/updatePassword", data),
-  login: (data: loginType) =>
+  login: (data: LoginSchemaType) =>
     AxiosInstance.post<ApiResponse<UserResType>>("/auth/login", data),
   signUp: (data: signupType) =>
     AxiosInstance.post<ApiResponse<UserResType>>("/auth/signup", data),

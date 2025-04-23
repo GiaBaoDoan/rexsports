@@ -71,7 +71,7 @@ const ResetWithEmailForm = () => {
             </Button>
           </form>
         </Form>
-        <CardFooter className="text-xs justify-center">
+        <CardFooter className="text-xs justify-center mt-5">
           <Link
             href="/auth/login"
             className="text-red-600 hover:underline ml-1"

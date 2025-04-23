@@ -1,4 +1,5 @@
 import HeaderCart from "@/components/layout/HeaderCart";
+import { FindCart } from "@/components/pages/cart/FindCart";
 import Link from "next/link";
 
 const Header = () => {
@@ -23,9 +24,9 @@ const Header = () => {
           </Link>
         </ul>
         <div className="btns items-center flex gap-5">
+          <FindCart />
           {/* <HeaderDropDownMenu /> */}
           <HeaderCart />
-          {/* <FindCart /> */}
         </div>
       </div>
     </header>

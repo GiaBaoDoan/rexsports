@@ -4,6 +4,10 @@ const { Order } = require("../models/Order.model");
 const CustomError = require("../utils/customError");
 const getPagination = require("../utils/pagination.util");
 const { getProductById } = require("./product.service");
+const sendEmail = require("../utils/email.util");
+const generateOrderEmail = require("../constants/OrderEmail");
+const TYPE_EMAIL = require("../constants/typeEmail");
+const Product = require("../models/Product.model");
 
 const getAllOrders = async ({ shipping, isPaid, phone, limit, page }) => {
   const filters = {
@@ -49,9 +53,6 @@ const createOrder = async (order) => {
     if (!variant || variant.stock < cart.quantity) {
       throw new Error(MESSAGE.ORDER.FAILED, httpStatus.BAD_REQUEST);
     }
-
-    variant.stock -= cart.quantity;
-    await product.save();
   }
 
   const newOrder = await Order.create(order);
@@ -68,11 +69,26 @@ const deleteOrder = async (id) => {
 };
 
 const updateOrder = async (id, data) => {
-  // await getOrderById(id);
+  const order = await getOrderById(id);
+
+  if (data.isPaid) {
+    for (const cart of order.cart) {
+      await Product.findByIdAndUpdate(cart.productId, {
+        $inc: { sold: cart.quantity },
+      });
+    }
+  }
 
   const updatedOrder = await Order.findByIdAndUpdate(id, data, { new: true });
 
   return updatedOrder;
+};
+
+const sendOrderConfirmationEmail = async (orderId) => {
+  const order = await getOrderById(orderId);
+  const html = generateOrderEmail(order);
+  await sendEmail(order.email, TYPE_EMAIL.order, html);
+  return order;
 };
 
 module.exports = {
@@ -81,4 +97,5 @@ module.exports = {
   createOrder,
   deleteOrder,
   updateOrder,
+  sendOrderConfirmationEmail,
 };

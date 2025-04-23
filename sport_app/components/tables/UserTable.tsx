@@ -20,6 +20,7 @@ import { deleteUserThunk } from "@/store/thunk/delete-user";
 import { getAllUsersThunk } from "@/store/thunk/get-users";
 import Avatar from "@/components/ui/avatar";
 import { ImageType } from "@/types/product";
+import EmailVerified from "@/components/ui/email-verify";
 
 const UserTable = () => {
   const { users } = useAppSelector((state) => state.UsersReducer);
@@ -44,7 +45,7 @@ const UserTable = () => {
             <TableHead>Tên người dùng</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Cập nhật</TableHead>
-            <TableHead>Quyền</TableHead>
+            <TableHead>Role</TableHead>
             <TableHead>Tình trạng</TableHead>
             <TableHead className="text-right">Thao tác</TableHead>
           </TableRow>
@@ -56,7 +57,9 @@ const UserTable = () => {
                 {<Avatar avatar={user.image as ImageType} />}
               </TableCell>
               <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <EmailVerified isVerified={user.verified} email={user.email} />
+              </TableCell>
               <TableCell>{getDate(user.updatedAt)}</TableCell>
               <TableCell>
                 <Badge variant="secondary">{user.role}</Badge>
@@ -64,6 +67,7 @@ const UserTable = () => {
               <TableCell>
                 <Status status={user.status} />
               </TableCell>
+
               <TableCell className="text-right space-x-2">
                 <EditOrDelete
                   onDelete={() => handleDelete(user._id)}

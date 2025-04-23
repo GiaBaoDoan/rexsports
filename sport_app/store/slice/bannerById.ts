@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 type initialState = {
   banner: BannerRes | null;
   isLoading: boolean;
-  error?: AxiosError<ApiError> | null;
+  error: AxiosError<ApiError> | null;
 };
 
 const initialState: initialState = {
@@ -22,7 +22,7 @@ const BannerById = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchBannerById.fulfilled, (state, action) => {
-      state.banner = action.payload.data as BannerRes;
+      state.banner = action.payload.data;
       state.isLoading = false;
       state.error = null;
     });

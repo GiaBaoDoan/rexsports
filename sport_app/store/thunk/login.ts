@@ -1,10 +1,10 @@
-import { loginType } from "@/components/forms/LoginForm";
+import { LoginSchemaType } from "@/schema/login";
 import { AuthServices } from "@/services/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const LoginThunk = createAsyncThunk(
   "/login",
-  async (data: loginType, { rejectWithValue }) => {
+  async (data: LoginSchemaType, { rejectWithValue }) => {
     try {
       const res = await AuthServices.login(data);
       return res.data;

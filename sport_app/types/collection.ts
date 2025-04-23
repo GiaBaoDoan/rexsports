@@ -5,9 +5,8 @@ export interface CollectionResType {
   name: string;
   description: string;
   slug: string;
-  products: ProductRes[];
+  products: ProductRes[] | [];
   status: boolean;
-  priority: number;
   image: ImageType;
   createdAt: string;
   updatedAt: string;
@@ -18,7 +17,6 @@ export interface CollectionReqType {
   description?: string;
   slug: string;
   products: ProductRes[] | string[];
-  status: string;
-  priority?: number;
+  status: boolean;
   image?: any;
 }

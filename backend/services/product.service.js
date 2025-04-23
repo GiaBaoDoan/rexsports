@@ -12,6 +12,7 @@ const getAllProducts = async ({ category, sortByPrice, page, limit }) => {
 
   const sort = {
     price: sortByPrice === "desc" ? -1 : 1,
+    createdAt: -1,
   };
 
   const totalRecords = await Product.countDocuments(filters);
@@ -61,10 +62,7 @@ const createProduct = async (data) => {
     }))
   );
 
-  const newProduct = await Product.create({
-    ...data,
-    status: data.status === "true",
-  });
+  const newProduct = await Product.create(data);
 
   return newProduct;
 };
@@ -90,14 +88,9 @@ const updateProductService = async (productId, data) => {
     }))
   );
 
-  const updatedProduct = await Product.findByIdAndUpdate(
-    productId,
-    {
-      ...data,
-      status: data.status === "true",
-    },
-    { new: true }
-  );
+  const updatedProduct = await Product.findByIdAndUpdate(productId, data, {
+    new: true,
+  });
 
   return updatedProduct;
 };

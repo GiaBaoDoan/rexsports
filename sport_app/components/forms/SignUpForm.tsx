@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,32 +23,11 @@ import {
 import Link from "next/link";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { SignupThunk } from "@/store/thunk/signup";
-
-const formSchema = z
-  .object({
-    email: z.string().email({ message: "Email không hợp lệ" }),
-    name: z.string().min(1, { message: "Không để trống thông tin" }),
-    password: z
-      .string()
-      .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" })
-      .regex(/[A-Z]/, { message: "Mật khẩu phải chứa ít nhất một chữ hoa" })
-      .regex(/[a-z]/, { message: "Mật khẩu phải chứa ít nhất một chữ thường" })
-      .regex(/[0-9]/, { message: "Mật khẩu phải chứa ít nhất một số" })
-      .regex(/[@$!%*?&]/, {
-        message: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt",
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Mật khẩu không khớp",
-    path: ["confirmPassword"],
-  });
-
-export type formType = z.infer<typeof formSchema>;
+import { SignupSchema, SignupSchemaType } from "@/schema/signup";
 
 export function SignupForm() {
-  const form = useForm<formType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignupSchemaType>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
       email: "",
       name: "",
@@ -59,7 +37,7 @@ export function SignupForm() {
 
   const { execute, isLoading } = useAsyncAction();
 
-  const onSubmit = (data: formType) => {
+  const onSubmit = (data: SignupSchemaType) => {
     const { email, name, password } = data;
     execute({
       actionCreator: () => SignupThunk({ email, name, password }),

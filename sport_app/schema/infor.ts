@@ -1,6 +1,6 @@
+import { EmailSchema } from "@/schema/email";
+import { PhoneSchema } from "@/schema/phoneNumber";
 import { z } from "zod";
-
-const validatePhone = /^\d+$/;
 
 export const InforSchema = z.object({
   name: z
@@ -11,18 +11,12 @@ export const InforSchema = z.object({
     .string()
     .min(1, { message: "Không để trống thông tin" })
     .max(200, { message: "Địa chỉ không được quá 200 ký tự" }),
-  phone: z
-    .string()
-    .min(1, { message: "Không để trống thông tin" })
-    .max(30, { message: "Tên không được quá 30 ký tự" })
-    .refine((text) => text.match(validatePhone), {
-      message: "Số điện thoại không hợp lệ",
-    }),
-  email: z.string().email({ message: "Email không hợp lệ" }),
+  phone: PhoneSchema,
+  email: EmailSchema,
   payment: z.enum(["COD", "VNPay"], {
     message: "Vui lòng chọn hình thức thanh toán",
   }),
-  userNote: z.string().min(1, { message: "Không để trống thông tin" }),
+  userNote: z.optional(z.string()),
   bill: z.any(),
 });
 

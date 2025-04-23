@@ -23,6 +23,7 @@ export interface ProductRes {
   category: CategoriesRes;
   status: boolean;
   slug: string;
+  sold: number;
   variants: VariantType[];
   createdAt: string;
   updatedAt: string;

@@ -6,8 +6,8 @@ import { ProductRes } from "@/types/product";
 import { Suspense } from "react";
 
 const getAllProducts = async (params?: {
-  category?: string;
-  sortByPrice?: string;
+  category: string;
+  sortByPrice: string;
 }) => {
   return await fetchData<ProductRes[]>(`/products`, params);
 };

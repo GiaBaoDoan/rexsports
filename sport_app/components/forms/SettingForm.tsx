@@ -26,7 +26,6 @@ import {
   ProfileReqType,
 } from "@/schema/profile";
 import { UpdateProfileThunk } from "@/store/thunk/update-profile";
-import { ImageType } from "@/types/product";
 
 export function SettingForm() {
   const form = useForm<ProfileReqType>({
@@ -44,7 +43,7 @@ export function SettingForm() {
     });
   };
 
-  const image = form.watch("image") as string | ImageType;
+  const image = form.watch("image");
 
   useEffect(() => {
     if (profile) {

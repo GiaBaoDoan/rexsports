@@ -20,7 +20,6 @@ const getBannerById = async (id) => {
 const createBanner = async (data) => {
   const banner = new Banner({
     ...data,
-    status: data.status === "true",
   });
 
   const newBanner = await banner.save();

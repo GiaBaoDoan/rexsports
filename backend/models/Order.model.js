@@ -1,17 +1,17 @@
 const { mongoose } = require("mongoose");
+const ImageSchema = require("./Image.schema");
+const ORDER_STATUS = require("../constants/orderStatus");
+const PAYMENT = require("../constants/payment");
 
 const CartSchema = new mongoose.Schema({
   productId: { type: String, required: true },
   variantId: { type: String, required: true },
+  quantity: { type: Number, required: true },
   name: { type: String, required: true },
   price: { type: Number, required: true },
-  quantity: { type: Number, required: true },
   color: { type: String, required: true },
   size: { type: String, required: true },
-  icon: {
-    type: String,
-    required: true,
-  },
+  icon: { type: String, required: true },
 });
 
 const orderSchema = new mongoose.Schema(
@@ -24,13 +24,19 @@ const orderSchema = new mongoose.Schema(
     bill: { type: String, required: false },
     payment: {
       type: String,
-      enum: ["COD", "VNPay"],
+      enum: [PAYMENT.COD, PAYMENT.VNPAY],
       required: true,
     },
     shipping: {
       type: String,
-      enum: ["Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"],
-      default: "Pending",
+      enum: [
+        ORDER_STATUS.PENDING,
+        ORDER_STATUS.CONFIRMED,
+        ORDER_STATUS.SHIPPED,
+        ORDER_STATUS.DELIVERED,
+        ORDER_STATUS.CANCELED,
+      ],
+      default: ORDER_STATUS.PENDING,
     },
     isPaid: {
       type: Boolean,

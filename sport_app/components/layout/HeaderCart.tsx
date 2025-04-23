@@ -13,11 +13,11 @@ const HeaderCart = () => {
   );
 
   return (
-    <Link href={"/carts"}>
+    <Link href="/carts">
       <div className="relative">
-        <IoBagOutline size={30} />
-        <div className="font-medium absolute top-1/2 -translate-y-1/3 left-1/2 -translate-x-1/2">
-          <span className="bg-gray-500 text-[10px] text-white rounded-full w-3 h-3 inline-flex justify-center">
+        <IoBagOutline size={30} className="text-gray-700" />
+        <div className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3">
+          <span className="bg-red-500 text-[10px] text-white rounded-full w-5 h-5 flex items-center justify-center font-bold">
             {AMOUNT_CART || 0}
           </span>
         </div>

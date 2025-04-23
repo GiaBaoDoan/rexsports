@@ -2,13 +2,12 @@
 
 import { OrderReqType, OrderResType } from "@/types/order";
 import { CiLocationOn, CiPhone, CiUser } from "react-icons/ci";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { updateOrderStatus } from "@/store/thunk/update-order";
 import { useParams } from "next/navigation";
 import useAsyncAction from "@/hooks/useAsyncAction";
-import { fetchOrder } from "@/store/thunk/fetch-order";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import Image from "next/image";
 import { MdAttachFile } from "react-icons/md";
@@ -30,7 +29,6 @@ const userFields = [
 
 const OrderReceiverForm = () => {
   const { order } = useAppSelector((state) => state.OrderReducer);
-  const dispatch = useAppDispatch();
 
   const { execute, isLoading } = useAsyncAction();
   const { id } = useParams();
@@ -54,9 +52,6 @@ const OrderReceiverForm = () => {
     execute({
       actionCreator() {
         return updateOrderStatus({ id: `${id}`, data });
-      },
-      callBack() {
-        return dispatch(fetchOrder(`${id}`));
       },
     });
   };

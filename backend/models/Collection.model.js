@@ -1,4 +1,5 @@
 const { mongoose } = require("mongoose");
+const ImageSchema = require("./Image.schema");
 
 const collectionSchema = new mongoose.Schema(
   {
@@ -7,17 +8,7 @@ const collectionSchema = new mongoose.Schema(
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     status: { type: Boolean, default: true },
     slug: { type: String, required: true, unique: true },
-    priority: { type: Number, default: 0 },
-    image: {
-      url: {
-        type: String,
-        required: true,
-      },
-      publicId: {
-        type: String,
-        required: true,
-      },
-    },
+    image: ImageSchema,
   },
   { timestamps: true }
 );

@@ -1,4 +1,5 @@
 const { mongoose } = require("mongoose");
+const ImageSchema = require("./Image.schema");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -7,24 +8,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     email: { type: String, unique: true, required: true },
+    image: ImageSchema,
     password: {
       type: String,
       required: true,
     },
     status: {
       type: Boolean,
-      required: true,
       default: true,
-    },
-    image: {
-      url: {
-        type: String,
-        required: false,
-      },
-      publicId: {
-        type: String,
-        required: false,
-      },
     },
     phone: {
       type: String,

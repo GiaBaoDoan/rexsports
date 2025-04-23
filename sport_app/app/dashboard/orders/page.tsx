@@ -19,7 +19,7 @@ const OrderPage = () => {
 };
 
 const OrderPageContent = () => {
-  const { pagination } = useAppSelector((state) => state.OrdersReducer);
+  const { pagination, orders } = useAppSelector((state) => state.OrdersReducer);
 
   const dispatch = useAppDispatch();
 
@@ -40,7 +40,7 @@ const OrderPageContent = () => {
         </h1>
       </header>
       <OrderFilter />
-      <OrderTable />
+      <OrderTable orders={orders} />
       <PaginationCustom pagination={pagination as PaginationRes} />
     </section>
   );

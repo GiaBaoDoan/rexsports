@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,31 +23,18 @@ import { useParams } from "next/navigation";
 import useAsyncAction from "@/hooks/useAsyncAction";
 import { resetNewPassword } from "@/store/thunk/reset-newPassword";
 import Link from "next/link";
-
-const FormSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" })
-    .regex(/[A-Z]/, { message: "Mật khẩu phải chứa ít nhất một chữ hoa" })
-    .regex(/[a-z]/, { message: "Mật khẩu phải chứa ít nhất một chữ thường" })
-    .regex(/[0-9]/, { message: "Mật khẩu phải chứa ít nhất một số" })
-    .regex(/[@$!%*?&]/, {
-      message: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt",
-    }),
-});
-
-export type FormType = z.infer<typeof FormSchema>;
+import { PasswordSchemaType, PasswordSchema } from "@/schema/passwordSchema";
 
 const ResetNewPasswordForm = () => {
-  const form = useForm<FormType>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<{ password: PasswordSchemaType }>({
+    resolver: zodResolver(PasswordSchema),
   });
 
   const { execute, isLoading } = useAsyncAction();
 
   const { id, token } = useParams();
 
-  const onSubmit = (data: FormType) => {
+  const onSubmit = (data: { password: PasswordSchemaType }) => {
     execute({
       actionCreator: () =>
         resetNewPassword({
@@ -88,7 +74,7 @@ const ResetNewPasswordForm = () => {
             </Button>
           </form>
         </Form>
-        <CardFooter className="text-xs justify-center">
+        <CardFooter className="text-xs justify-center mt-5">
           <Link
             href="/auth/login"
             className="text-red-600 hover:underline ml-1"

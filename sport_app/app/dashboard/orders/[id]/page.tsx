@@ -9,21 +9,18 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import useFetchData from "@/hooks/use-fetch-data";
 import { getDate } from "@/lib/date";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { fetchOrder } from "@/store/thunk/fetch-order";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
 
 const AdminOrder = () => {
   const { id } = useParams();
 
-  const dispatch = useAppDispatch();
-  const { order } = useAppSelector((state) => state.OrderReducer);
+  useFetchData(() => fetchOrder(id as string), [id as string]);
 
-  useEffect(() => {
-    dispatch(fetchOrder(`${id}`));
-  }, [id, dispatch]);
+  const { order } = useAppSelector((state) => state.OrderReducer);
 
   return (
     <div>

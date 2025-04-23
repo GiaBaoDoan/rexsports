@@ -15,9 +15,7 @@ const BannerAddPage = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-5">
-        📝 Thêm danh mục
-      </h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-5">📝 Thêm banner</h1>
       <BannerForm onSubmit={handleCreate} isSubmiting={isLoading} />
     </div>
   );

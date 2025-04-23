@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { CollectionReqType } from "@/types/collection";
 import { convertToBase64 } from "@/lib/utils";
 import { useEffect } from "react";
-import { CollectionFormSchema, defaultValues } from "@/schema/collection";
+import {
+  collectionDefaultValues,
+  CollectionFormSchema,
+} from "@/schema/collection";
 import {
   Select,
   SelectContent,
@@ -41,7 +45,7 @@ export default function CollectionForm({
 }: props) {
   const form = useForm<CollectionReqType>({
     resolver: zodResolver(CollectionFormSchema),
-    defaultValues,
+    defaultValues: collection || collectionDefaultValues,
   });
 
   const image = form.watch("image");
@@ -74,9 +78,7 @@ export default function CollectionForm({
                   <Input
                     onChange={(event) => {
                       if (event.target.files) {
-                        convertToBase64(event.target.files[0]).then((image) => {
-                          onChange(image);
-                        });
+                        convertToBase64(event.target.files[0]).then(onChange);
                       }
                     }}
                     type="file"
@@ -93,6 +95,9 @@ export default function CollectionForm({
                   />
                 )}
                 <FormMessage />
+                <FormDescription>
+                  Chọn ảnh hiển thị chính cho bộ sưu tập
+                </FormDescription>
               </FormItem>
             )}
           />
@@ -123,7 +128,11 @@ export default function CollectionForm({
                   <FormControl>
                     <Input {...field} placeholder="Slug" />
                   </FormControl>
-                  <Button type="button" onClick={generateSlug}>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={generateSlug}
+                  >
                     Generate
                   </Button>
                 </div>
@@ -131,7 +140,6 @@ export default function CollectionForm({
               </FormItem>
             )}
           />
-          {/* products in collections */}
           <ComboboxForm />
           {/* description */}
           <FormField
@@ -153,7 +161,6 @@ export default function CollectionForm({
             )}
           />
         </div>
-        {/* status && piority  */}
         <div className="border rounded-lg shadow p-4 space-y-4 ">
           <FormField
             name="status"
@@ -166,15 +173,15 @@ export default function CollectionForm({
                   <Select
                     {...field}
                     disabled={isSubmiting}
-                    onValueChange={field.onChange}
-                    value={field.value}
+                    value={`${field.value}`}
+                    onValueChange={(value) => field.onChange(value === "true")}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Tình trạng" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="true">Hoạt động</SelectItem>
                       <SelectItem value="false">Dừng hoạt động</SelectItem>
+                      <SelectItem value="true">Hoạt động</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -182,27 +189,7 @@ export default function CollectionForm({
               </FormItem>
             )}
           />
-          <FormField
-            name="priority"
-            disabled={isSubmiting}
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Ưu tiên</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    min={1}
-                    type="number"
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
-                    placeholder="Nhập số ưu tiên"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full">
+          <Button disabled={isSubmiting} type="submit" className="w-full">
             Lưu collection
           </Button>
         </div>

@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
+const ImageSchema = require("./Image.schema");
 
 const bannerSchema = new mongoose.Schema(
   {
     title: { type: String, required: false },
-    image: {
-      url: String,
-      publicId: String,
-    },
+    image: ImageSchema,
     link: { type: String, required: false },
     status: { type: Boolean, default: true },
     description: { type: String, require: false },

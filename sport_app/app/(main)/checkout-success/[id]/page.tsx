@@ -1,14 +1,21 @@
 "use client";
 
 import CartTable from "@/components/tables/CartTable";
-import { useAppDispatch } from "@/store/store";
+import OrderPaid from "@/components/ui/order-paid";
+import OrderShipping from "@/components/ui/order-shipping";
+import { getDate } from "@/lib/date";
+import { formatCurrency } from "@/lib/format";
+import { calculateCartTotal } from "@/lib/math";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { fetchOrder } from "@/store/thunk/fetch-order";
+import { OrderResType } from "@/types/order";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
 const Page = () => {
   const { id } = useParams();
 
+  const { order } = useAppSelector((state) => state.OrderReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,7 +35,64 @@ const Page = () => {
           <span className="font-bold"> tin nhắn SMS.</span>
         </p>
       </article>
-      <CartTable />
+      <section className="bg-muted/50 p-6 rounded-2xl shadow-sm mb-10 border">
+        <h2 className="text-2xl font-semibold mb-6 text-primary">
+          🧾 Thông tin đơn hàng
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm leading-relaxed">
+          <p>
+            <span className="font-semibold text-foreground">Mã đơn hàng:</span>{" "}
+            {order?._id}
+          </p>
+          <p>
+            <OrderShipping order={order as OrderResType} />
+          </p>
+          <p>
+            <span className="font-semibold text-foreground">Ngày đặt:</span>{" "}
+            {getDate(`${order?.createdAt}`)}
+          </p>
+          <p>
+            <span className="font-semibold text-foreground">
+              Tên người nhận:
+            </span>{" "}
+            {order?.name}
+          </p>
+          <p>
+            <span className="font-semibold text-foreground">
+              Số điện thoại:
+            </span>{" "}
+            {order?.phone}
+          </p>
+
+          <p>
+            <span className="font-semibold text-foreground">
+              Phương thức thanh toán:
+            </span>{" "}
+            {order?.payment}
+          </p>
+          <p>
+            <span className="font-semibold text-foreground">Địa chỉ: </span>{" "}
+            {order?.address}
+          </p>
+          <p>
+            <span className="font-semibold text-foreground">Ghi chú: </span>{" "}
+            {order?.userNote}
+          </p>
+
+          <p className="md:col-span-2">
+            <span className="font-semibold text-foreground">Tổng tiền:</span>{" "}
+            <span className="text-base text-destructive font-bold">
+              {formatCurrency(calculateCartTotal(order?.cart || []))}
+            </span>
+          </p>
+          <OrderPaid order={order as OrderResType} />
+        </div>
+
+        <div className="mt-8">
+          <CartTable />
+        </div>
+      </section>
     </div>
   );
 };

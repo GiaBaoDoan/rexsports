@@ -1,9 +1,8 @@
 const nodemailer = require("nodemailer");
 
 const { HOST, SERVICE, PASS, USER } = require("../config/env.config");
-const generateEmailTemplate = require("../constants/html");
 
-const sendEmail = async (email, subject, link) => {
+const sendEmail = async (email, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({
       host: HOST,
@@ -18,8 +17,8 @@ const sendEmail = async (email, subject, link) => {
     await transporter.sendMail({
       from: USER,
       to: email,
-      subject: subject,
-      html: generateEmailTemplate(subject, link),
+      subject,
+      html,
     });
   } catch (error) {
     throw new Error(error);

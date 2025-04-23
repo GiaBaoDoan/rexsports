@@ -1,4 +1,4 @@
-const generateEmailTemplate = (type, link) => {
+const generateEmailTemplate = (type, link = "") => {
   let title = "";
   let description = "";
   let buttonText = "";
@@ -18,12 +18,6 @@ const generateEmailTemplate = (type, link) => {
         "Bạn vừa yêu cầu đặt lại mật khẩu. Vui lòng nhấn vào nút bên dưới để tiếp tục quá trình.";
       buttonText = "Đặt lại mật khẩu";
       buttonColor = "#F44336";
-      break;
-    default:
-      title = "Thông báo từ Rexsports";
-      description = "Đây là nội dung email.";
-      buttonText = "Xem chi tiết";
-      buttonColor = "#2196F3";
       break;
   }
 

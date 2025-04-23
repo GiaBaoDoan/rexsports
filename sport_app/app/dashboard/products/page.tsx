@@ -26,7 +26,13 @@ const ProductsPageContent = () => {
   const { pagination } = useAppSelector((state) => state.ProductsReducer);
 
   const queries = useSearchParams();
-  useFetchData(() => fetchProductsThunk(`${queries}`), [queries]);
+  const search = new URLSearchParams(queries.toString());
+
+  if (!search.has("limit")) {
+    search.set("limit", "10");
+  }
+
+  useFetchData(() => fetchProductsThunk(`${search.toString()}`), [queries]);
 
   return (
     <section className="space-y-5">

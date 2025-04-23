@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -69,31 +71,25 @@ const ProductVariantForm = () => {
                         }}
                       />
                     </FormControl>
-                    {variants[index]?.icon &&
-                      (typeof variants[index].icon === "string" ? (
-                        <Image
-                          src={variants[index].icon}
-                          alt="Ảnh sản phẩm"
-                          width={80}
-                          height={80}
-                          className="object-cover w-[80px] h-[80px] rounded border mt-2"
-                        />
-                      ) : (
-                        <Image
-                          src={variants[index].icon.url}
-                          alt="Ảnh sản phẩm"
-                          width={80}
-                          height={80}
-                          className="object-cover w-[80px] h-[80px] rounded border mt-2"
-                        />
-                      ))}
+                    {variants[index]?.icon && (
+                      <Image
+                        src={
+                          typeof variants[index].icon === "string"
+                            ? variants[index].icon
+                            : variants[index].icon.url
+                        }
+                        alt="Ảnh sản phẩm"
+                        width={80}
+                        height={80}
+                        className="object-cover w-[80px] h-[80px] rounded border mt-2"
+                      />
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            {/* Thông tin sản phẩm */}
             <div className="grid grid-cols-2 gap-2">
               {/* Màu sắc */}
               <FormField
@@ -153,6 +149,7 @@ const ProductVariantForm = () => {
               <Button
                 type="button"
                 variant="secondary"
+                disabled={index === 0}
                 onClick={() => remove(index)}
               >
                 <IoTrashOutline />

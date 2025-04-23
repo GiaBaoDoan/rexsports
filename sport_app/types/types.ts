@@ -9,7 +9,7 @@ export interface ApiResponse<T> {
   status: string;
   message: string;
   pagination?: PaginationRes;
-  data: T; // Dữ liệu trả về có thể là bất kỳ loại dữ liệu nào
+  data: T;
 }
 
 export interface ApiError {

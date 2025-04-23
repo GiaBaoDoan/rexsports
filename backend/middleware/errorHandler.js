@@ -1,3 +1,4 @@
+const { NODE_ENV } = require("../config/env.config");
 const httpStatus = require("../constants/httpStatus");
 
 const errorHandler = (err, req, res, next) => {
@@ -8,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
     statusCode,
     success: false,
     message,
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+    ...(NODE_ENV === "development" && { stack: err.stack }),
   });
 };
 

@@ -1,4 +1,5 @@
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
+const dayjs = require("dayjs");
 const { uploadToCloudinary } = require("../services/cloudinary.service");
 
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
@@ -15,4 +16,8 @@ const handleImage = async (image, folder) => {
   return image;
 };
 
-module.exports = { isValidId, isBase64, handleImage };
+const getDate = (time) => {
+  return dayjs().startOf(time).toDate();
+};
+
+module.exports = { isValidId, isBase64, handleImage, getDate };

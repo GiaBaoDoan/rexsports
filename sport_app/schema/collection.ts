@@ -1,24 +1,21 @@
+import { ImageSchema } from "@/schema/image";
 import { z } from "zod";
 
 export const CollectionFormSchema = z.object({
-  name: z.string().min(3, "Tên bộ sưu tập ít nhất 3 ký tự"),
-  description: z.string().optional(),
-  image: z.any(),
+  name: z.string().min(1, "không được để trống thông tin"),
   slug: z.string({
     message: "Vui lòng thêm slug",
   }),
+  description: z.string().optional(),
+  image: ImageSchema,
   products: z.array(z.any()),
-  status: z.string().default("true"),
-  priority: z
-    .number({ message: "Phải nhận vào số" })
-    .min(1, "Ưu tiên phải là số lớn hơn 0"),
+  status: z.boolean(),
 });
 
-export const defaultValues = {
+export const collectionDefaultValues = {
   name: "",
   description: "",
-  image: null,
-  status: "true",
-  priority: 1,
+  image: "",
+  status: true,
   products: [],
 };

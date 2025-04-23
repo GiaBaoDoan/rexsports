@@ -21,6 +21,7 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { user, token } = await AuthServices.login(req.body);
+
     res.cookie("access_token", token, cookieOptions);
 
     return res.status(httpStatus.CREATED).json({

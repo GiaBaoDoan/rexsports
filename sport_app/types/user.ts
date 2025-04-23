@@ -12,6 +12,7 @@ export interface UserResType {
   description: string;
   role: RoleType;
   phone?: string;
+  verified: boolean;
   createdAt: string;
   updatedAt: string;
 }

@@ -2,7 +2,7 @@ const ProductServices = require("../services/product.service");
 const httpStatus = require("../constants/httpStatus");
 
 const getAllProducts = async (req, res, next) => {
-  const { category, sortByPrice = "asc", page = 1, limit = 10 } = req.query;
+  const { category, sortByPrice = "asc", page = 1, limit = null } = req.query;
 
   try {
     const { products, pagination } = await ProductServices.getAllProducts({
@@ -19,6 +19,7 @@ const getAllProducts = async (req, res, next) => {
       pagination,
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
