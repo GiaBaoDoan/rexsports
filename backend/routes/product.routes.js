@@ -8,7 +8,6 @@ const {
 
 const express = require("express");
 const UploadMiddleware = require("../middleware/upload.middleware");
-const verifyToken = require("../middleware/auth.middleware");
 const router = express.Router();
 
 router.get("/", getAllProducts);

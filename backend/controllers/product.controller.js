@@ -42,7 +42,7 @@ const createProduct = async (req, res, next) => {
     const newProduct = await ProductServices.createProduct(req.body);
     return res.status(httpStatus.CREATED).json({
       data: newProduct,
-      message: "Đã tạo sản phẩm mới",
+      message: "Đã tạo sản phẩm mới !!",
       status: httpStatus.CREATED,
     });
   } catch (err) {
@@ -59,7 +59,7 @@ const updateProduct = async (req, res, next) => {
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
-      message: "Cập nhật sản phẩm thành công",
+      message: "Cập nhật sản phẩm thành công !!",
       data: updated,
     });
   } catch (err) {
@@ -72,7 +72,7 @@ const deleteProduct = async (req, res, next) => {
     const product = await ProductServices.deleteProduct(req.params.id);
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
-      message: "Đã xóa sản phẩm",
+      message: "Đã xóa sản phẩm thành công !!",
       data: product,
     });
   } catch (err) {

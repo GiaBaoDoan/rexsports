@@ -24,7 +24,7 @@ const UserDetailPage = () => {
       email: user?.email ?? "",
       name: user?.name ?? "",
       role: user?.role as RoleType,
-      status: String(user?.status ?? ""),
+      status: user?.status as boolean,
       phone: user?.phone ?? "",
       address: user?.address || "",
       description: user?.description || "",

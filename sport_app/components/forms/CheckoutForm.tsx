@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -55,15 +56,15 @@ export function CheckoutForm() {
     const order = { ...infor, cart };
 
     if (infor.payment === "VNPay" && !bill) {
-      return form.setError("bill", { message: "Bạn tải biên lai lên" });
+      return form.setError("bill", { message: "Bạn cần tải biên lai lên !!" });
     }
 
     execute({
       actionCreator: () => createOrder(order),
       callBack: (res) => {
-        router.push(`checkout-success/${res?.data._id}`);
+        router.push(`/checkout-success/${res?.data._id}`);
         localStorage.removeItem("carts");
-        localStorage.setItem("user", JSON.stringify({ ...infor, bill: null }));
+        localStorage.setItem("user", JSON.stringify({ ...infor, bill: "" }));
       },
     });
   };
@@ -117,7 +118,6 @@ export function CheckoutForm() {
                     <FormControl>
                       <Select
                         {...field}
-                        defaultValue="COD"
                         value={field.value}
                         onValueChange={field.onChange}
                       >
@@ -180,7 +180,9 @@ export function CheckoutForm() {
                             }}
                           />
                         </FormControl>
-
+                        <FormDescription>
+                          Vui lòng tải biên lai sau khi chuyển khoản !!
+                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}

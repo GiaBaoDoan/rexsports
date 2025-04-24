@@ -28,6 +28,10 @@ import { LoginSchema, LoginSchemaType } from "@/schema/login";
 export default function LoginForm() {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const { execute, isLoading } = useAsyncAction();

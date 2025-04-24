@@ -31,7 +31,8 @@ const Payment = () => {
             Thực hiện theo hướng dẫn sau để thanh toán:
           </h6>
           <p className="mb-2">
-            <strong>Bước 1:</strong> Mở ứng dụng <strong>Mobile Banking</strong>
+            <strong>Bước 1:</strong> Mở ứng dụng{" "}
+            <strong>Mobile Banking </strong>
             của ngân hàng
           </p>
           <p className="mb-2">
@@ -39,29 +40,29 @@ const Payment = () => {
             QR tại hướng dẫn này
           </p>
           <p className="mb-2">
-            <strong>Bước 3:</strong> Nhập số tiền cần chuyển là
+            <strong>Bước 3:</strong> Nhập số tiền cần chuyển là{" "}
             <strong className="text-blue-600">
               {formatCurrency(total_price)}
             </strong>
-            và nội dung chuyển tiền
+            và nội dung chuyển tiền{" "}
             <strong className="text-blue-600">NAP 2e1u77</strong> (NAP + cách +
             code_thanh_toán)
           </p>
           <div>
             <p className="mb-1">
-              Ngân hàng:
+              Ngân hàng:{" "}
               <i>
                 <b>{BANK._bankName}</b>
               </i>
             </p>
             <p className="mb-1">
-              Tên:
+              Tên:{" "}
               <i>
                 <b>{BANK._userName}</b>
               </i>
             </p>
             <p className="mb-1">
-              Số tài khoản:
+              Số tài khoản:{" "}
               <i>
                 <b>
                   <i>{BANK._id}</i>

@@ -17,6 +17,7 @@ const ProductInfor = ({ product }: { product: ProductRes }) => {
 
       <div className="flex items-center gap-3">
         <p className="text-lg font-semibold text-red-500">
+          <span className="font-normal">Giá:</span>{" "}
           {formatCurrency(product?.price)}
         </p>
         {isFakePrice && (

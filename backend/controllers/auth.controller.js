@@ -1,17 +1,15 @@
-const { successResponse } = require("../utils/response.util");
 const AuthServices = require("../services/auth.service");
 const httpStatus = require("../constants/httpStatus");
-const cookieOptions = require("../config/cookie.config");
-const MESSAGE = require("../constants/messages");
+const { NODE_ENV } = require("../config/env.config");
 
 const signup = async (req, res, next) => {
   try {
     const newUser = await AuthServices.signup(req.body);
 
     return res.status(httpStatus.CREATED).json({
-      data: newUser,
       status: httpStatus.CREATED,
-      message: MESSAGE.AUTH.REGISTER_SUCCESS,
+      message: "Đăng ký thành công",
+      data: newUser,
     });
   } catch (error) {
     next(error);
@@ -22,12 +20,18 @@ const login = async (req, res, next) => {
   try {
     const { user, token } = await AuthServices.login(req.body);
 
-    res.cookie("access_token", token, cookieOptions);
+    res.cookie("access_token", token, {
+      path: "/",
+      secure: NODE_ENV === "production",
+      sameSite: NODE_ENV === "production" ? "none" : "lax",
+      expires: new Date(Date.now() + 120 * 60 * 1000),
+      httpOnly: true,
+    });
 
     return res.status(httpStatus.CREATED).json({
-      data: user,
       status: httpStatus.CREATED,
-      message: MESSAGE.AUTH.LOGIN_SUCCESS,
+      message: "Đăng nhập thành công !!",
+      data: user,
     });
   } catch (error) {
     next(error);
@@ -38,9 +42,9 @@ const getMe = async (req, res, next) => {
   try {
     const user = await AuthServices.getMe(req.user.id);
     return res.status(httpStatus.OK).json({
-      data: user,
       status: httpStatus.OK,
-      message: MESSAGE.COMMON.SUCCESS,
+      message: "Lấy thông tin thành công !!",
+      data: user,
     });
   } catch (error) {
     next(error);
@@ -51,9 +55,9 @@ const updateProfile = async (req, res, next) => {
   try {
     const updatedMe = await AuthServices.updateMe(req.user.id, req.body);
     return res.status(httpStatus.OK).json({
-      data: updatedMe,
       status: httpStatus.OK,
       message: "Cập nhật thông tin thành công !!",
+      data: updatedMe,
     });
   } catch (err) {
     next(err);
@@ -65,9 +69,9 @@ const updatePassword = async (req, res, next) => {
     const newUser = await AuthServices.updatePassword(req.user.id, req.body);
 
     return res.status(httpStatus.OK).json({
-      data: newUser,
       status: httpStatus.OK,
-      message: "Đã cập nhật mật khẩu thành công !!",
+      message: "Cập nhật mật khẩu thành công !!",
+      data: newUser,
     });
   } catch (err) {
     console.log(err);
@@ -83,9 +87,9 @@ const verifyEmail = async (req, res, next) => {
     );
 
     return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
       message: "Xác thực email thành công !!",
       data: user,
-      status: httpStatus.OK,
     });
   } catch (error) {
     next(error);
@@ -98,7 +102,7 @@ const logout = async (req, res, next) => {
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
-      message: MESSAGE.AUTH.LOGOUT_SUCCESS,
+      message: "Đăng xuất thành công !!",
       data: null,
     });
   } catch (error) {
@@ -111,9 +115,9 @@ const requestPasswordReset = async (req, res, next) => {
     const user = await AuthServices.requestPasswordReset(req.body.email);
 
     return res.status(httpStatus.OK).json({
-      message: "Vui lòng kiểm tra email",
-      data: user,
       status: httpStatus.OK,
+      message: "Vui lòng kiểm tra email !!",
+      data: user,
     });
   } catch (err) {
     next(err);
@@ -131,7 +135,7 @@ const resetNewPassword = async (req, res, next) => {
     );
 
     return res.status(httpStatus.OK).json({
-      message: "Mật khẩu đã được cập nhật !!",
+      message: "Thay đổi mậu khẩu thành công !!",
       data: user,
       status: httpStatus.OK,
     });

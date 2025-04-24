@@ -24,10 +24,18 @@ import useAsyncAction from "@/hooks/useAsyncAction";
 import { resetNewPassword } from "@/store/thunk/reset-newPassword";
 import Link from "next/link";
 import { PasswordSchemaType, PasswordSchema } from "@/schema/passwordSchema";
+import { object } from "zod";
 
 const ResetNewPasswordForm = () => {
   const form = useForm<{ password: PasswordSchemaType }>({
-    resolver: zodResolver(PasswordSchema),
+    resolver: zodResolver(
+      object({
+        password: PasswordSchema,
+      })
+    ),
+    defaultValues: {
+      password: "",
+    },
   });
 
   const { execute, isLoading } = useAsyncAction();
@@ -69,7 +77,12 @@ const ResetNewPasswordForm = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={isLoading} type="submit" className="w-full">
+            <Button
+              disabled={isLoading}
+              onClick={form.handleSubmit(onSubmit)}
+              type="button"
+              className="w-full"
+            >
               Đặt lại mật khẩu mới
             </Button>
           </form>

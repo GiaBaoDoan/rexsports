@@ -22,7 +22,7 @@ export function FindCart() {
       <SheetTrigger asChild>
         <TextSearch className="cursor-pointer" size={30} />
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto !max-w-[30rem] p-6 bg-white shadow-lg rounded-xl">
+      <SheetContent className="overflow-y-auto !max-w-[30rem] p-6 bg-white shadow-lg">
         <SheetHeader className="mb-5">
           <SheetTitle className="uppercase text-xl font-semibold text-gray-800">
             Tra cứu đơn hàng

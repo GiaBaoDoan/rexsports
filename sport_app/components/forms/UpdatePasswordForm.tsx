@@ -20,6 +20,9 @@ import { useForm } from "react-hook-form";
 const UpdatePasswordForm = () => {
   const form = useForm<UpdatePasswordType>({
     resolver: zodResolver(UpdatePasswordSchema),
+    defaultValues: {
+      newPassword: "",
+    },
   });
 
   const { execute, isLoading } = useAsyncAction();

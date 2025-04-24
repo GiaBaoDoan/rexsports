@@ -9,11 +9,7 @@ const getAllCollections = async () => {
 };
 
 const createCollection = async (data) => {
-  const newCollection = await Collection.create({
-    ...data,
-    status: data.status === "true",
-    priority: data.priority || 0,
-  });
+  const newCollection = await Collection.create(data);
 
   return newCollection;
 };
@@ -22,8 +18,9 @@ const getCollectionByIdOrSlug = async (idOrSlug) => {
   const query = isValidId(idOrSlug) ? { _id: idOrSlug } : { slug: idOrSlug };
 
   const collection = await Collection.findOne(query).populate("products");
-  if (!collection)
-    throw new CustomError("Không tìm thấy collection", httpStatus.NOT_FOUND);
+  if (!collection) {
+    throw new CustomError("Không tìm thấy collection !!", httpStatus.NOT_FOUND);
+  }
 
   return collection;
 };
@@ -41,8 +38,9 @@ const updateCollection = async (id, data) => {
 const deleteCollection = async (id) => {
   const collection = await Collection.findByIdAndDelete(id);
 
-  if (!collection)
-    throw new CustomError("Không tìm thấy collection", httpStatus.NOT_FOUND);
+  if (!collection) {
+    throw new CustomError("Không tìm thấy collection !!", httpStatus.NOT_FOUND);
+  }
 
   return collection;
 };

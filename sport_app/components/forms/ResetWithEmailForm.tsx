@@ -33,6 +33,9 @@ export type FormType = z.infer<typeof FormSchema>;
 const ResetWithEmailForm = () => {
   const form = useForm<FormType>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+    },
   });
 
   const { execute, isLoading } = useAsyncAction();

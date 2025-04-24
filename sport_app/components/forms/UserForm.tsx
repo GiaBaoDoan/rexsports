@@ -36,11 +36,20 @@ const formSchema = z.object({
   phone: z.string().optional(),
   address: z.string().optional(),
   description: z.string().optional(),
-  status: z.string({
-    message: "Không để trống thông tin",
-  }),
+  status: z.boolean(),
   role: z.enum(["admin", "user"]),
 });
+
+const defaultValues: UserReqType = {
+  email: "",
+  image: "",
+  phone: "",
+  name: "",
+  address: "",
+  description: "",
+  status: true,
+  role: "user",
+};
 
 export type UserReqType = z.infer<typeof formSchema>;
 
@@ -53,7 +62,7 @@ type props = {
 const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
   const form = useForm<UserReqType>({
     resolver: zodResolver(formSchema),
-    defaultValues: user,
+    defaultValues: user || defaultValues,
   });
 
   useEffect(() => {
@@ -190,7 +199,10 @@ const UserForm = ({ user, isSubmiting, onSubmit }: props) => {
                 <FormLabel className="font-semibold text-gray-700">
                   Trạng thái
                 </FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select
+                  value={`${field.value}`}
+                  onValueChange={(val) => field.onChange(val === "true")}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Chọn trạng thái" />

@@ -16,7 +16,7 @@ export const InforSchema = z.object({
   payment: z.enum(["COD", "VNPay"], {
     message: "Vui lòng chọn hình thức thanh toán",
   }),
-  userNote: z.optional(z.string()),
+  userNote: z.string().optional(),
   bill: z.any(),
 });
 
@@ -25,6 +25,7 @@ export const defaultValues: InforSchemaType = {
   address: "",
   email: "",
   phone: "",
+  bill: "",
   payment: "COD",
   userNote: "",
 };

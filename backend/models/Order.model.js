@@ -1,5 +1,4 @@
 const { mongoose } = require("mongoose");
-const ImageSchema = require("./Image.schema");
 const ORDER_STATUS = require("../constants/orderStatus");
 const PAYMENT = require("../constants/payment");
 

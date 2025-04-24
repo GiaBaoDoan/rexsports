@@ -109,13 +109,13 @@ const requestPasswordReset = async (email) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new CustomError("Email chưa được đăng ký", httpStatus.BAD_REQUEST);
+    throw new CustomError("Email chưa được đăng ký !!", httpStatus.BAD_REQUEST);
   }
 
   const token = await TokenServices.createHashToken(user._id);
 
   const link = `${CLIENT_URL}/auth/reset-password/${user._id}/${token}`;
-  const html = generateEmailTemplate(TYPE_EMAIL.verify, link);
+  const html = generateEmailTemplate(TYPE_EMAIL.reset, link);
   await sendEmail(user.email, TYPE_EMAIL.reset, html);
 
   return user;
