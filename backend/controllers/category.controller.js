@@ -1,11 +1,14 @@
 const httpStatus = require("../constants/httpStatus");
 const CategoryServices = require("../services/category.service");
-const { successResponse } = require("../utils/response.util");
 
 const getAllCategories = async (req, res, next) => {
   try {
     const categories = await CategoryServices.getAllCategories();
-    return successResponse(res, categories);
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: "Lấy dữ liệu thành công",
+      data: categories,
+    });
   } catch (err) {
     next(err);
   }
@@ -14,7 +17,11 @@ const getAllCategories = async (req, res, next) => {
 const getCategoryById = async (req, res, next) => {
   try {
     const category = await CategoryServices.getCategoryById(req.params.id);
-    return successResponse(res, category);
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: "Lấy dữ liệu thành công",
+      data: category,
+    });
   } catch (err) {
     next(err);
   }
@@ -23,12 +30,11 @@ const getCategoryById = async (req, res, next) => {
 const createCategory = async (req, res, next) => {
   try {
     const category = await CategoryServices.createCategory(req.body);
-    return successResponse(
-      res,
-      category,
-      "Đã tạo danh mục",
-      httpStatus.CREATED
-    );
+    return res.status(httpStatus.CREATED).json({
+      status: httpStatus.CREATED,
+      message: "Tạo danh mục thành công !!",
+      data: category,
+    });
   } catch (err) {
     next(err);
   }
@@ -40,7 +46,11 @@ const updateCategory = async (req, res, next) => {
       req.params.id,
       req.body
     );
-    return successResponse(res, category, "Đã cập nhật danh mục");
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: "Đã cập nhật danh mục !!",
+      data: category,
+    });
   } catch (err) {
     next(err);
   }
@@ -49,7 +59,11 @@ const updateCategory = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
   try {
     const category = await CategoryServices.deleteCategory(req.params.id);
-    return successResponse(res, category, "Đã xóa danh mục");
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: "Đã xóa danh mục thành công !!",
+      data: category,
+    });
   } catch (err) {
     next(err);
   }

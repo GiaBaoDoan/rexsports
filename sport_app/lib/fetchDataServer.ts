@@ -17,7 +17,7 @@ export const fetchData = async <T>(
     }
 
     const res = await fetch(`${API_URL}/${endpoint}?${params}`, {
-      cache: "no-store",
+      next: { revalidate: 300 },
       ...options,
     });
 
