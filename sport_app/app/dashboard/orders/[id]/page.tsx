@@ -3,6 +3,7 @@
 import OrderReceiverForm from "@/components/forms/OrderReceiverForm";
 import OrderStatusForm from "@/components/forms/OrderStatusForm";
 import CartTable from "@/components/tables/CartTable";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,17 +11,27 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import useFetchData from "@/hooks/use-fetch-data";
+import useAsyncAction from "@/hooks/useAsyncAction";
 import { getDate } from "@/lib/date";
 import { useAppSelector } from "@/store/store";
+import { confirmOrder } from "@/store/thunk/confirm-email";
 import { fetchOrder } from "@/store/thunk/fetch-order";
+import { MoveRight } from "lucide-react";
 import { useParams } from "next/navigation";
 
 const AdminOrder = () => {
   const { id } = useParams();
+  const { order } = useAppSelector((state) => state.OrderReducer);
+
+  const { execute, isLoading } = useAsyncAction();
+
+  const handleConfirmEmail = () => {
+    execute({
+      actionCreator: () => confirmOrder(`${id}`),
+    });
+  };
 
   useFetchData(() => fetchOrder(id as string), [id as string]);
-
-  const { order } = useAppSelector((state) => state.OrderReducer);
 
   return (
     <div>
@@ -35,9 +46,12 @@ const AdminOrder = () => {
           </CardHeader>
           <CardContent>
             <CartTable />
-          </CardContent>
-          <CardFooter className="block">
             <OrderReceiverForm />
+          </CardContent>
+          <CardFooter>
+            <Button disabled={isLoading} onClick={handleConfirmEmail}>
+              Mail cho khách hàng <MoveRight />
+            </Button>
           </CardFooter>
         </Card>
         <OrderStatusForm />

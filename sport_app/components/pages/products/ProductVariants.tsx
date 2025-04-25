@@ -77,7 +77,7 @@ const ProductVariants = ({ product }: { product: ProductRes }) => {
       <Button
         disabled={checkStock() || !idActive}
         className={cn(
-          "text-base p-3 rounded w-full",
+          "text-base p-3 rounded-none w-full",
           checkStock() || !idActive
             ? "bg-gray-300 text-gray-500"
             : "bg-black text-white"

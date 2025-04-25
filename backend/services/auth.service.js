@@ -12,6 +12,7 @@ const TokenServices = require("../services/token.service");
 const { CLIENT_URL } = require("../config/env.config");
 const TYPE_EMAIL = require("../constants/typeEmail");
 const generateEmailTemplate = require("../constants/html");
+const roles = require("../constants/roles");
 
 const signup = async (data) => {
   const user = await User.findOne({ email: data.email });
@@ -34,7 +35,11 @@ const signup = async (data) => {
 };
 
 const login = async (data) => {
-  const user = await User.findOne({ email: data.email, verified: true });
+  const user = await User.findOne({
+    email: data.email,
+    verified: true,
+    status: true,
+  });
 
   if (!user) {
     throw new CustomError(MESSAGE.AUTH.LOGIN_FAILED, httpStatus.BAD_REQUEST);

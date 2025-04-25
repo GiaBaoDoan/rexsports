@@ -6,7 +6,7 @@ import { ApiError, ApiResponse } from "@/types/types";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
-const useAsyncAction = () => {
+export default function useAsyncAction<T>() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -15,14 +15,14 @@ const useAsyncAction = () => {
     callBack,
   }: {
     actionCreator: () => any;
-    callBack?: (res?: ApiResponse<any>) => void;
+    callBack?: (res: ApiResponse<T>) => void;
   }) => {
     setIsLoading(true);
     try {
-      const res = await dispatch(actionCreator()).unwrap();
+      const res = (await dispatch(actionCreator()).unwrap()) as ApiResponse<T>;
       toast({
         title: "Thành công 🎉",
-        description: res?.message || "Thao tác thành công!",
+        description: res.message || "Thao tác thành công!",
       });
       if (callBack) callBack(res);
     } catch (err) {
@@ -45,6 +45,4 @@ const useAsyncAction = () => {
   };
 
   return { execute, isLoading };
-};
-
-export default useAsyncAction;
+}

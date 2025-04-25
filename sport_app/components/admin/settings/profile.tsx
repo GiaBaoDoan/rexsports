@@ -25,7 +25,7 @@ export default function Profile() {
 
   const handleLogout = () => {
     execute({
-      actionCreator: LogoutThunk,
+      actionCreator: () => LogoutThunk(),
       callBack: () => router.push("/auth/login"),
     });
   };

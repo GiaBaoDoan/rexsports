@@ -1,3 +1,13 @@
+const dayjs = require("dayjs");
+const PAYMENT = require("./payment");
+
+const totalPrice = (order) => {
+  return order.cart.reduce(
+    (totalPrice, cart) => totalPrice + cart.price * cart.quantity,
+    0
+  );
+};
+
 const generateOrderEmail = (order) => {
   const productRows = order.cart
     .map((item) => {
@@ -21,19 +31,37 @@ const generateOrderEmail = (order) => {
     })
     .join("");
 
-  const detailLink = `${process.env.CLIENT_URL}/checkout/${order._id}`;
+  const detailLink = `${process.env.CLIENT_URL}/checkout-success/${order._id}`;
 
   return `
   <div style="max-width: 700px; margin: auto; padding: 20px; font-family: sans-serif; background-color: #f9f9f9; border-radius: 10px; border: 1px solid #eee;">
-    <h2 style="text-align: center; color: #333;">🛒 Đơn hàng mới từ Rexsports</h2>
+    <h2 style="text-align: center; color: #333;">🛒 Đơn hàng của bạn đã được xác nhận từ Rexsports</h2>
     
     <h3>Thông tin khách hàng</h3>
     <p>
-      👤 <strong>${order.name}</strong><br/>
-      📧 ${order.email}<br/>
-      ☎️ ${order.phone}<br/>
-      🏠 ${order.address}<br/>
-      🕒 Ngày đặt: ${order.createdAt}
+      Họ tên người nhận: <strong>${order.name}</strong><br/>
+      Email đặt hàng: <strong>${order.email}</strong> <br/>
+      Số điện thoại đặt hàng: <strong>${order.phone}</strong><br/>
+      Địa chỉ nhận hàng: <strong>${order.address}</strong><br/>
+      Thanh toán: <span 
+      style="color: ${order.isPaid ? "green" : "red"}; font-weight: bold;"
+    >
+      ${order.isPaid ? "✅ Đã thanh toán" : "❌ Chưa thanh toán"}
+    </span><br/>
+   
+      Hình thức thanh toán: <strong>${
+        order.payment === PAYMENT.COD
+          ? "Giao hàng nhận tiền"
+          : "Chuyển khoản ngân hàng"
+      }</strong><br/>
+       ${
+         order.isPaid && order.billUrl
+           ? `📄 <img src="${order.billUrl}" alt="Hóa đơn chuyển khoản" style="max-width: 100%; height: auto;"/>`
+           : ""
+       }
+     🕒 Ngày đặt hàng: <strong>${dayjs(order.createdAt).format(
+       "DD/MM/YYYY HH:mm:ss"
+     )}}</strong> 
     </p>
 
     <h3 style="margin-top: 30px;">Chi tiết đơn hàng</h3>
@@ -52,6 +80,7 @@ const generateOrderEmail = (order) => {
     </table>
 
     <p style="margin-top: 20px; text-align: right;">
+      Tổng ${totalPrice(order).toLocaleString()}đ
     </p>
 
     <div style="text-align: center; margin: 30px 0;">
@@ -66,4 +95,3 @@ const generateOrderEmail = (order) => {
 };
 
 module.exports = generateOrderEmail;
-// <strong>Tổng cộng: ${order.total.toLocaleString()}₫</strong>

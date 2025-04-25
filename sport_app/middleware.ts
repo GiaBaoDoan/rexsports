@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const authRoutes = ["/auth/login", "/auth/signup"];
-const protectedRoutes = ["/dashboard/overview"];
+const authPattern = /^\/auth(\/.*)?$/;
+const protectedPattern = /^\/dashboard(\/.*)?$/;
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
   const { pathname } = request.nextUrl;
 
-  const isAuthRoute = authRoutes.includes(pathname);
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  const isAuthRoute = authPattern.test(pathname);
+  const isProtectedRoute = protectedPattern.test(pathname);
 
   if (token && isAuthRoute) {
     return NextResponse.redirect(new URL("/dashboard/overview", request.url));
@@ -24,7 +22,6 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Áp dụng middleware cho các route liên quan
 export const config = {
-  matcher: [...protectedRoutes, ...authRoutes],
+  matcher: ["/auth/:path*", "/dashboard/:path*"],
 };

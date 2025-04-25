@@ -22,4 +22,8 @@ export const OrderServices = {
       `/orders/${data.id}`,
       data.data
     ),
+  confirmOrder: (orderId: string) =>
+    AxiosIntance.post<ApiResponse<OrderResType>>(
+      `/orders/send-email/${orderId}`
+    ),
 };

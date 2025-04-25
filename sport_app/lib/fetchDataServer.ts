@@ -17,7 +17,7 @@ export const fetchData = async <T>(
     }
 
     const res = await fetch(`${API_URL}/${endpoint}?${params}`, {
-      next: { revalidate: 300 },
+      next: { revalidate: 60 },
       ...options,
     });
 

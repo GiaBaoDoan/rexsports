@@ -46,17 +46,26 @@ const createOrder = async (order) => {
   for (const cart of order.cart) {
     const product = await getProductById(cart.productId);
 
-    const variant = product.variants.find(
+    const variantIndex = product.variants.findIndex(
       (v) => String(v._id) === cart.variantId
     );
+
+    const variant = product.variants[variantIndex];
 
     if (!variant || variant.stock < cart.quantity) {
       throw new Error(MESSAGE.ORDER.FAILED, httpStatus.BAD_REQUEST);
     }
+
+    const updatedVariants = [...product.variants];
+    updatedVariants[variantIndex].stock -= cart.quantity;
+
+    await Product.findByIdAndUpdate(cart.productId, {
+      $inc: { sold: cart.quantity },
+      variants: updatedVariants,
+    });
   }
 
   const newOrder = await Order.create(order);
-
   return newOrder;
 };
 
@@ -69,15 +78,7 @@ const deleteOrder = async (id) => {
 };
 
 const updateOrder = async (id, data) => {
-  const order = await getOrderById(id);
-
-  if (data.isPaid) {
-    for (const cart of order.cart) {
-      await Product.findByIdAndUpdate(cart.productId, {
-        $inc: { sold: cart.quantity },
-      });
-    }
-  }
+  await getOrderById(id);
 
   const updatedOrder = await Order.findByIdAndUpdate(id, data, { new: true });
 
