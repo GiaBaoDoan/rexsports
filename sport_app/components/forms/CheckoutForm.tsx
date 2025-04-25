@@ -36,11 +36,12 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import Payment from "@/components/pages/payment/Payment";
 import { convertToBase64 } from "@/lib/utils";
+import { OrderResType } from "@/types/order";
 
 export function CheckoutForm() {
   const { cart } = useAppSelector((state) => state.CartReducer);
 
-  const { execute, isLoading } = useAsyncAction();
+  const { execute, isLoading } = useAsyncAction<OrderResType>();
 
   const router = useRouter();
 
@@ -62,7 +63,7 @@ export function CheckoutForm() {
     execute({
       actionCreator: () => createOrder(order),
       callBack: (res) => {
-        router.push(`/checkout-success/${res?.data._id}`);
+        router.push(`/checkout-success/${res.data._id}`);
         localStorage.removeItem("carts");
         localStorage.setItem("user", JSON.stringify({ ...infor, bill: "" }));
       },
