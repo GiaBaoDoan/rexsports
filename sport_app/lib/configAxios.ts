@@ -1,6 +1,6 @@
 import { API_URL } from "@/lib/contanst";
-import { store } from "@/store/store";
-import { LogoutThunk } from "@/store/thunk/logout";
+// import { store } from "@/store/store";
+// import { LogoutThunk } from "@/store/thunk/logout";
 import { ApiError } from "@/types/types";
 import axios, { AxiosError } from "axios";
 
