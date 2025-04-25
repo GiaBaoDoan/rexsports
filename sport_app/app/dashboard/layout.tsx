@@ -26,7 +26,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  useFetchData(() => getProfileThunk(), []);
+  useFetchData(getProfileThunk, []);
 
   const pathname = usePathname();
 

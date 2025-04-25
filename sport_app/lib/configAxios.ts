@@ -14,10 +14,10 @@ const AxiosIntance = axios.create({
 AxiosIntance.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiError>) => {
-    if (error.response?.status === 401) {
-      window.location.href = "/auth/login";
-      store.dispatch(LogoutThunk());
-    }
+    // if (error.response?.status === 401) {
+    //   window.location.href = "/auth/login";
+    //   store.dispatch(LogoutThunk());
+    // }
     return Promise.reject(error);
   }
 );
