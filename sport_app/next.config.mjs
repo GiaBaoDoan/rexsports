@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'rexsports.vn',
       },
+      {
+        protocol: "https",
+        hostname: "img.vietqr.io", 
+      },
     ],
   },
 };

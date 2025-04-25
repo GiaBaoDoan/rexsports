@@ -1,15 +1,16 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-// const authPattern = /^\/auth(\/.*)?$/;
-// const protectedPattern = /^\/dashboard(\/.*)?$/;
+const authRoutes = ["/auth"];
+const protectedRoutes = ["/dashboard"];
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
   const { pathname } = request.nextUrl;
 
-  const isAuthRoute = pathname.startsWith("/auth");
-  const isProtectedRoute = pathname.startsWith("/dashboard");
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
 
   if (token && isAuthRoute) {
     return NextResponse.redirect(new URL("/dashboard/overview", request.url));
@@ -23,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/auth/:path*"],
 };
