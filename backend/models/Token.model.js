@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const verificationTokenSchema = new mongoose.Schema(
+const TokenSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,4 +13,4 @@ const verificationTokenSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("VerificationToken", verificationTokenSchema);
+module.exports = mongoose.model("Token", TokenSchema);

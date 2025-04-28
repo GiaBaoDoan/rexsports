@@ -1,6 +1,6 @@
 const AuthServices = require("../services/auth.service");
 const httpStatus = require("../constants/httpStatus");
-const { NODE_ENV } = require("../config/env.config");
+const cookieOptions = require("../config/cookie.config");
 
 const signup = async (req, res, next) => {
   try {
@@ -20,13 +20,7 @@ const login = async (req, res, next) => {
   try {
     const { user, token } = await AuthServices.login(req.body);
 
-    res.cookie("access_token", token, {
-      path: "/",
-      secure: NODE_ENV === "production",
-      sameSite: NODE_ENV === "production" ? "none" : "lax",
-      expires: new Date(Date.now() + 120 * 60 * 1000),
-      httpOnly: true,
-    });
+    res.cookie("access_token", token, cookieOptions);
 
     return res.status(httpStatus.CREATED).json({
       status: httpStatus.CREATED,
@@ -110,9 +104,9 @@ const logout = async (req, res, next) => {
   }
 };
 
-const requestPasswordReset = async (req, res, next) => {
+const forgotPassword = async (req, res, next) => {
   try {
-    const user = await AuthServices.requestPasswordReset(req.body.email);
+    const user = await AuthServices.forgotPassword(req.body.email);
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
@@ -150,7 +144,7 @@ module.exports = {
   getMe,
   updateProfile,
   updatePassword,
-  requestPasswordReset,
+  forgotPassword,
   resetNewPassword,
   verifyEmail,
   logout,

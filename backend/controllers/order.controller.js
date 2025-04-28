@@ -8,11 +8,10 @@ const createOrder = async (req, res, next) => {
 
     return res.status(httpStatus.CREATED).json({
       status: httpStatus.CREATED,
-      message: MESSAGE.ORDER.CREATED,
+      message: "Đặt hàng thành công !!",
       data: order,
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

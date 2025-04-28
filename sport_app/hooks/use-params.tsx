@@ -17,7 +17,7 @@ export const useQueryParams = () => {
   };
 
   const onClearSearchParams = () => {
-    router.push(window.location.pathname); // Giữ nguyên trang nhưng xóa query
+    router.push(window.location.pathname);
   };
   return {
     updateQuery,

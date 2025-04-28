@@ -3,7 +3,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Cart = {
-  productId: string; // ID của sản phẩm
+  productId: string;
   variantId: string;
   size: string;
   color: string;

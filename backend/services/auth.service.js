@@ -12,7 +12,6 @@ const TokenServices = require("../services/token.service");
 const { CLIENT_URL } = require("../config/env.config");
 const TYPE_EMAIL = require("../constants/typeEmail");
 const generateEmailTemplate = require("../constants/html");
-const roles = require("../constants/roles");
 
 const signup = async (data) => {
   const user = await User.findOne({ email: data.email });
@@ -110,7 +109,7 @@ const verifyEmail = async (userId, tokenValue) => {
   return newUser;
 };
 
-const requestPasswordReset = async (email) => {
+const forgotPassword = async (email) => {
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -149,6 +148,6 @@ module.exports = {
   updateMe,
   updatePassword,
   verifyEmail,
-  requestPasswordReset,
+  forgotPassword,
   resetNewPassword,
 };

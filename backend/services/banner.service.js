@@ -18,11 +18,7 @@ const getBannerById = async (id) => {
 };
 
 const createBanner = async (data) => {
-  const banner = new Banner({
-    ...data,
-  });
-
-  const newBanner = await banner.save();
+  const newBanner = await banner.create(data);
 
   return newBanner;
 };
