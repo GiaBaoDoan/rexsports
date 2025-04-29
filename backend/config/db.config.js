@@ -3,8 +3,12 @@ const { MONGO_URI } = require("./env.config");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
-    console.log("MongoDB connected successfully!");
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(MONGO_URI);
+      console.log("MongoDB connected successfully!");
+    } else {
+      console.log("MongoDB already connected!");
+    }
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);

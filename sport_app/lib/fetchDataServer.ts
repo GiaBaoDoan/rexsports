@@ -20,14 +20,12 @@ export const fetchData = async <T>(
       next: { revalidate: 60 },
       ...options,
     });
-
-    if (!res.ok) throw new Error("Failed to fetch data");
+    if (!res.ok) throw new Error("Không fetch được data !!");
 
     const data = await res.json();
     return data.data;
   } catch (err) {
     console.log(err);
-
     return null;
   }
 };

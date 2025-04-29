@@ -1,9 +1,15 @@
 import ProductCard from "@/components/pages/products/ProductCard";
 import { fetchData } from "@/lib/fetchDataServer";
 import { CollectionResType } from "@/types/collection";
+import { notFound } from "next/navigation";
 
 const getProductDetail = async (slug: string) => {
-  return await fetchData<CollectionResType>(`collections/${slug}`);
+  try {
+    const product = await fetchData<CollectionResType>(`collections/${slug}`);
+    return product;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default async function CollectionPage({
@@ -12,6 +18,11 @@ export default async function CollectionPage({
   params: { slug: string };
 }) {
   const collection = await getProductDetail(params.slug);
+
+  if (!collection) {
+    return notFound();
+  }
+
   return (
     <div className="max-w-6xl mx-auto my-16 px-4">
       <article className="mb-8">

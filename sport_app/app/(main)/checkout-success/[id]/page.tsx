@@ -1,6 +1,7 @@
 "use client";
 
 import CartTable from "@/components/tables/CartTable";
+import Loading from "@/components/ui/loading";
 import OrderPaid from "@/components/ui/order-paid";
 import OrderShipping from "@/components/ui/order-shipping";
 import { getDate } from "@/lib/date";
@@ -15,12 +16,14 @@ import { useEffect } from "react";
 const Page = () => {
   const { id } = useParams();
 
-  const { order } = useAppSelector((state) => state.OrderReducer);
+  const { order, isLoading } = useAppSelector((state) => state.OrderReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchOrder(`${id}`));
   }, [id, dispatch]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-[80%] container mx-auto py-10">

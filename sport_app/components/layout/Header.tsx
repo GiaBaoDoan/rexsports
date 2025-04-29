@@ -22,7 +22,7 @@ const Header = () => {
           <Link className="font-light hover:underline" href={"/products"}>
             Sản phẩm
           </Link>
-          <Link className="font-light hover:underline" href={"/"}>
+          <Link className="font-light hover:underline" href={"/lesson"}>
             Giáo án
           </Link>
           <Link className="font-light hover:underline" href={"/about"}>

@@ -9,7 +9,13 @@ const getAllProducts = async (params?: {
   category: string;
   sortByPrice: string;
 }) => {
-  return await fetchData<ProductRes[]>(`/products`, params);
+  try {
+    const data = await fetchData<ProductRes[]>(`/products`, params);
+    return data;
+  } catch (error) {
+    console.error("Lỗi khi fetch products:", error);
+    return [];
+  }
 };
 
 export default async function ProductsPage({
